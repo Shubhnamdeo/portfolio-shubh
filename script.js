@@ -31,7 +31,7 @@ const SHUBH_KNOWLEDGE = {
       role: "Salesforce AI Agent Developer Trainee",
       company: "SmartBridge (LastMile Program)",
       duration: "April 2025 – January 2026",
-      months: "10 months",
+      months: "6 months",
       location: "India",
       current: true,
       highlights: [
