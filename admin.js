@@ -350,6 +350,15 @@ const ADMIN = {
       this.enableAdminMode();
     }
 
+    // Open admin login via nav button
+    document.getElementById('openAdminBtn')?.addEventListener('click', () => {
+      if (this.isLoggedIn) {
+        this.showNotification('Already logged in as Admin!', 'info');
+      } else {
+        document.getElementById('adminLoginModal').classList.add('open');
+      }
+    });
+
     // Triple-click logo to open admin login
     let clickCount = 0;
     document.querySelector('.nav-logo')?.addEventListener('click', (e) => {

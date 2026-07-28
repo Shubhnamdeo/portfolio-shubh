@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    SHUBH NAMDEO PORTFOLIO — MAIN STYLESHEET
    ============================================ */
 
@@ -1920,7 +1920,7 @@ body {
   transform: translateY(-3px);
 }
 
-/* The iframe wrapper � fixed aspect ratio */
+/* The iframe wrapper � fixed aspect ratio */
 .cert-embed-frame-wrap {
   width: 100%;
   aspect-ratio: 4/3;
@@ -2308,3 +2308,27 @@ body.admin-mode .admin-add-cert-btn { display: block; }
 .admin-notif-success { background: #065f46; color: #6ee7b7; border: 1px solid #34d399; }
 .admin-notif-error   { background: #7f1d1d; color: #fca5a5; border: 1px solid #f87171; }
 .admin-notif-info    { background: #1e3a5f; color: #93c5fd; border: 1px solid #60a5fa; }
+
+/* Admin Nav Button */
+.nav-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  color: var(--accent-2);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-admin-btn:hover {
+  background: rgba(167, 139, 250, 0.25);
+  border-color: var(--accent-2);
+  color: white;
+  transform: translateY(-1px);
+}
