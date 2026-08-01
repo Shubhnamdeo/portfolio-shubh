@@ -1,1 +1,1 @@
-<PASTE ADMIN_JS FROM COMMIT 84e7f095bb60140801518505b58170d9940b4f5c HERE>
+/* Admin mode removed intentionally. */
