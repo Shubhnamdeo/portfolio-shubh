@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shubh Namdeo | Portfolio</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shubh Namdeo | Software Engineer & AI Developer</title>
+  <meta name="description" content="Portfolio of Shubh Namdeo – Software Engineer specializing in AI Agents, Backend Development, Python, Node.js, and GenAI. Currently seeking full-time opportunities." />
+  <meta name="keywords" content="Shubh Namdeo, Software Engineer, AI Agents, Backend Developer, Python, Node.js, GenAI, Salesforce, AWS, Portfolio" />
+  <meta property="og:title" content="Shubh Namdeo | Software Engineer & AI Developer" />
+  <meta property="og:description" content="Software Engineer specializing in AI Agents, Backend Architecture, and Generative AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Animated Background -->
+  <div class="bg-canvas" id="bgCanvas"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- ===== ADMIN LOGIN MODAL ===== -->
+  <div class="admin-login-modal" id="adminLoginModal">
+    <div class="admin-login-backdrop" id="adminLoginClose"></div>
+    <div class="admin-login-panel">
+      <div class="admin-login-header">
+        <span class="admin-login-icon">🔐</span>
+        <h3>Admin Access</h3>
+        <p>Portfolio management — Shubh Namdeo only</p>
+      </div>
+      <form class="admin-login-form" id="adminLoginForm">
+        <input type="password" id="adminPasswordInput" class="admin-password-input"
+          placeholder="Enter admin password" autocomplete="current-password" />
+        <p class="admin-login-error" id="adminLoginError"></p>
+        <button type="submit" class="admin-login-btn">Unlock Admin Panel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN TOOLBAR ===== -->
+  <div class="admin-toolbar" id="adminToolbar">
+    <div class="admin-toolbar-left">
+      <span class="admin-toolbar-badge">⚡ Admin Mode</span>
+      <span class="admin-toolbar-hint">Click any text to edit it</span>
+    </div>
+    <div class="admin-toolbar-right">
+      <button class="admin-toolbar-btn admin-reset" id="adminResetBtn">↺ Reset</button>
+      <button class="admin-toolbar-btn admin-publish" id="adminPublishBtn">🚀 Publish to GitHub</button>
+      <button class="admin-toolbar-btn admin-logout" id="adminLogoutBtn">✕ Exit Admin</button>
+    </div>
+  </div>
 
   <!-- Navigation -->
-  <nav class="navbar scrolled" id="navbar">
+  <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#hero" class="nav-logo">
         <span class="logo-bracket">&lt;</span>SN<span class="logo-bracket">/&gt;</span>
@@ -29,6 +66,11 @@
             <span class="ai-dot"></span> Ask AI
           </button>
         </li>
+        <li>
+          <button class="nav-admin-btn" id="openAdminBtn" title="Admin Login">
+            🔑 Admin
+          </button>
+        </li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -38,25 +80,605 @@
 
   <!-- ===== HERO SECTION ===== -->
   <section class="hero" id="hero">
-    <div class="hero-content visible">
+    <div class="hero-content">
       <div class="hero-badge">
         <span class="badge-dot"></span> Open to Opportunities
       </div>
       <h1 class="hero-title">
-        Hi, I'm <span>Shubh Namdeo</span>
+        Hi, I'm <span class="gradient-text">Shubh Namdeo</span>
       </h1>
+      <p class="hero-subtitle typewriter" id="typewriter"></p>
       <p class="hero-desc">
-        Building scalable systems, cloud-native applications, and impactful digital experiences.
+        Software Engineer specializing in <strong>backend architecture</strong>, <strong>cloud infrastructure</strong>, and <strong>Generative AI</strong>. Building scalable, AI-powered applications that handle real-time data for hundreds of users.
       </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#contact" class="btn btn-secondary">Let’s Connect</a>
+        <a href="#contact" class="btn-primary">
+          <span>Get In Touch</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://github.com/Shubhnamdeo" target="_blank" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <button class="btn-ghost" id="heroAskBtn">
+          <span class="ai-spark">✦</span> Ask AI About Me
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">15+</span>
+          <span class="stat-label">Certifications</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">6mo</span>
+          <span class="stat-label">Enterprise Internship</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">B.Tech</span>
+          <span class="stat-label">CS @ GGITS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="profile-card">
+        <div class="profile-glow"></div>
+        <img src="photo-headshot.jpg" alt="Shubh Namdeo - Software Engineer" class="profile-img" />
+        <div class="profile-ring"></div>
+        <div class="floating-badge badge-top" style="--delay:0s">
+          <span>🤖</span> AI Engineer
+        </div>
+        <div class="floating-badge badge-right" style="--delay:0.5s">
+          <span>☁️</span> AWS Cloud
+        </div>
+        <div class="floating-badge badge-bottom" style="--delay:1s">
+          <span>🐍</span> Python
+        </div>
+        <div class="floating-badge badge-left" style="--delay:1.5s">
+          <span>⚡</span> Node.js
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ===== BANNER SECTION ===== -->
+  <section class="banner-section" id="banner">
+    <div class="banner-wrapper">
+      <img src="banner.png" alt="Code. Create. Elevate. — Shubh Namdeo" class="banner-img" />
+      <div class="banner-overlay"></div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// about me</span>
+        <h2 class="section-title">Who I Am</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead">
+            A passionate <strong>Software Engineer</strong> from Greater Jabalpur, India, dedicated to building intelligent, scalable systems at the intersection of backend engineering and AI.
+          </p>
+          <p>
+            Currently pursuing my <strong>B.Tech in Computer Science</strong> at Gyan Ganga Institute of Technology Sciences (graduating June 2026), I've spent the past year working as a <strong>Salesforce AI Agent Developer Trainee</strong> at SmartBridge's LastMile Program — gaining real enterprise experience configuring and deploying AI agents.
+          </p>
+          <p>
+            My core passion lies in <strong>Generative AI</strong>, where I combine prompt engineering, cloud infrastructure (AWS), and modern backend development to create solutions that actually move the needle. I'm actively seeking full-time opportunities where I can bring this blend of skills to a high-impact team.
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/Shubhnamdeo" target="_blank" class="about-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              GitHub Profile
+            </a>
+            <a href="https://www.linkedin.com/in/shubh-namdeo" target="_blank" class="about-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="about-cards">
+          <div class="info-card">
+            <div class="info-icon">🎓</div>
+            <div class="info-content">
+              <h4>Education</h4>
+              <p>B.Tech Computer Science</p>
+              <span>GGITS • 2022–2026 • CGPA: 7.37</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📍</div>
+            <div class="info-content">
+              <h4>Location</h4>
+              <p>Greater Jabalpur, India</p>
+              <span>Open to On-site · Hybrid · Remote</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">💼</div>
+            <div class="info-content">
+              <h4>Status</h4>
+              <p>Actively Job Seeking</p>
+              <span>Full-time opportunities</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">🌐</div>
+            <div class="info-content">
+              <h4>Connections</h4>
+              <p>338 LinkedIn Followers</p>
+              <span>248 Connections</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Keep the rest of your sections exactly as currently in your repo -->
+  <!-- ===== SKILLS SECTION ===== -->
+  <section class="section section-alt" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// tech stack</span>
+        <h2 class="section-title">Skills & Technologies</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon">🤖</span>
+            <h3>AI & Machine Learning</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag skill-primary">Generative AI</span>
+            <span class="skill-tag skill-primary">Prompt Engineering</span>
+            <span class="skill-tag skill-primary">AI Agents</span>
+            <span class="skill-tag">Gemini API</span>
+            <span class="skill-tag">Vertex AI</span>
+            <span class="skill-tag">RAG Systems</span>
+            <span class="skill-tag">Einstein Agent</span>
+            <span class="skill-tag">Machine Learning</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon">💻</span>
+            <h3>Languages & Frameworks</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag skill-primary">Python</span>
+            <span class="skill-tag skill-primary">Node.js</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Apex (Salesforce)</span>
+            <span class="skill-tag">Shell/Linux</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon">☁️</span>
+            <h3>Cloud & Infrastructure</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag skill-primary">Amazon Web Services</span>
+            <span class="skill-tag skill-primary">Salesforce</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">Google Cloud</span>
+            <span class="skill-tag">Cloud Security</span>
+            <span class="skill-tag">CCSK</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <span class="skill-cat-icon">📊</span>
+            <h3>Data & Analytics</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag skill-primary">Data Science</span>
+            <span class="skill-tag">Power BI</span>
+            <span class="skill-tag">Cisco Packet Tracer</span>
+            <span class="skill-tag">Networking</span>
+            <span class="skill-tag">Cybersecurity</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE SECTION ===== -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// work history</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot active"></div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <div class="timeline-company">
+                <div class="company-logo">SB</div>
+                <div>
+                  <h3 class="timeline-role">Salesforce AI Agent Developer Trainee</h3>
+                  <p class="timeline-company-name">SmartBridge • LastMile Program</p>
+                </div>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-date">Apr 2025 – Jan 2026</span>
+                <span class="timeline-duration">6 months</span>
+                <span class="timeline-badge current">Current</span>
+              </div>
+            </div>
+            <div class="timeline-body">
+              <p>Enterprise-level internship focused on Salesforce AI ecosystem and Agentic AI development.</p>
+              <ul class="timeline-achievements">
+                <li>Developed automated business logic utilizing <strong>Salesforce AI and Apex</strong>, streamlining user interactions and improving system response efficiency</li>
+                <li>Navigated complex cloud environments ensuring all system actions complied with <strong>procedural guidelines and enterprise architecture standards</strong></li>
+                <li>Configured <strong>Field-Level Security (FLS)</strong> protocols to guarantee data privacy and structural integrity, aligning with modern data protection standards</li>
+                <li>Participated in the <strong>100K Agentblazer Champions Program</strong> — actively configuring and deploying Salesforce AI agents</li>
+                <li>Attended 3-Day National Workshop to expand Agentforce expertise</li>
+              </ul>
+              <div class="timeline-skills">
+                <span class="skill-chip">Salesforce</span>
+                <span class="skill-chip">Apex</span>
+                <span class="skill-chip">AI Agents</span>
+                <span class="skill-chip">Agentforce</span>
+                <span class="skill-chip">FLS Security</span>
+              </div>
+              <div class="timeline-proof" style="margin-top: 16px;">
+                <button class="cert-expand-btn" onclick="openPDF('certs/salesforce-lastmile.pdf','Salesforce AI Agent Developer — SmartBridge LastMile Certificate Proof')" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; font-size: 0.8rem;">
+                  📜 View Internship Certificate Proof →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATIONS SECTION ===== -->
+
+  <!-- PDF Expand Lightbox -->
+  <div class="pdf-lightbox" id="pdfLightbox" role="dialog" aria-modal="true">
+    <div class="pdf-lightbox-backdrop" id="pdfBackdrop"></div>
+    <div class="pdf-viewer-panel">
+      <div class="pdf-viewer-header">
+        <span class="pdf-viewer-title" id="pdfTitle">Certificate</span>
+        <div class="pdf-viewer-actions">
+          <a class="pdf-download-btn" id="pdfDownload" download title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+          <button class="pdf-close-btn" id="pdfClose" aria-label="Close viewer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="pdf-embed-wrap">
+        <iframe id="pdfFrame" class="pdf-frame" title="Certificate Viewer" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <section class="section section-alt" id="certifications">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// achievements</span>
+        <h2 class="section-title">Certifications &amp; Credentials</h2>
+        <p class="section-desc">All verified certificates displayed directly in a unified 3×N grid. Click ⛶ Expand on any certificate for full-screen view or download.</p>
+      </div>
+
+      <!-- Unified 3xN Grid with All Certificates -->
+      <div class="cert-embed-grid cert-embed-grid-3">
+
+        <!-- 1. Salesforce LastMile -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/salesforce-lastmile.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Salesforce AI Agent Developer"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Salesforce AI Agent Developer</h4><span>SmartBridge × Salesforce (LastMile)</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/salesforce-lastmile.pdf','Salesforce AI Agent Developer — SmartBridge LastMile')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 2. AWS Cloud Foundations -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/aws-cloud-foundations.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="AWS Cloud Foundations"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>AWS Cloud Foundations</h4><span>Amazon Web Services</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/aws-cloud-foundations.pdf','AWS Academy — Cloud Foundations')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 3. Prompt Engineering -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/prompt-engineering.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Advanced Prompt Engineering"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Advanced Prompt Engineering</h4><span>Simplilearn</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/prompt-engineering.pdf','Advanced Prompt Engineering — Simplilearn')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 4. Cloud Security CCSK -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cloud-security-ccsk.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Cloud Security Knowledge (CCSK)"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Cloud Security Knowledge (CCSK)</h4><span>Cloud Security Alliance</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cloud-security-ccsk.pdf','Cloud Security Knowledge — CCSK')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 5. CCNA Enterprise Networking -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/ccna-ensa.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="CCNA ENSA"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>CCNA Enterprise Networking (ENSA)</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/ccna-ensa.pdf','CCNA Enterprise Networking')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 6. Python Essentials 2 -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/python-essentials2.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Python Essentials 2"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Python Essentials 2</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/python-essentials2.pdf','Python Essentials 2')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 7. CPA C++ -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cpp.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="CPA Programming Essentials in C++"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>CPA — Programming in C++</h4><span>Cisco</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cpp.pdf','CPA Programming Essentials in C++')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 8. GDGC GitHub -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/gdgc-github.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="GDGC GitHub Certificate"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>GDGC GitHub Certificate</h4><span>Google Developer Groups</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/gdgc-github.pdf','GDGC GitHub Certificate')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 9. Microsoft Certification -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/microsoft-cert.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Microsoft Certification"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Microsoft Certification</h4><span>Microsoft</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/microsoft-cert.pdf','Microsoft Certification')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 10. Cybersecurity Essentials -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cert2.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Cybersecurity Essentials"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Cybersecurity Essentials</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cert2.pdf','Cybersecurity Essentials')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 11. Intro to Cybersecurity -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cert3.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Intro to Cybersecurity"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Introduction to Cybersecurity</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cert3.pdf','Introduction to Cybersecurity')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 12. Networking Essentials -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cert4.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Networking Essentials"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Networking Essentials</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cert4.pdf','Networking Essentials')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 13. Cisco Packet Tracer -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cert5.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Cisco Packet Tracer"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Cisco Packet Tracer</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cert5.pdf','Cisco Packet Tracer')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 14. Introduction to IoT -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cisco-cert1.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Introduction to IoT"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Introduction to IoT</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cisco-cert1.pdf','Introduction to IoT — Cisco')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 15. AICTE Cisco Virtual Internship -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/aicte-cisco8.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="AICTE Cisco Virtual Internship"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>AICTE Cisco Virtual Internship</h4><span>AICTE × Cisco</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/aicte-cisco8.pdf','AICTE Cisco Virtual Internship')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 16. AICTE Cisco Program Completion -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/aicte-cisco9.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="AICTE Cisco Program Completion"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>AICTE Cisco Program Completion</h4><span>AICTE × Cisco</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/aicte-cisco9.pdf','AICTE Cisco Program Completion')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 17. Networking & Security Specialist -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/misc-cert1.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Networking & Security Certificate"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Networking &amp; Security Specialist</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/misc-cert1.pdf','Networking Certificate')">⛶ Expand</button>
+          </div>
+        </div>
+
+        <!-- 18. Network Security Architecture -->
+        <div class="cert-embed-card">
+          <div class="cert-embed-frame-wrap">
+            <iframe src="certs/cert-e42b.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-embed-iframe" loading="lazy" title="Network Security Architecture"></iframe>
+          </div>
+          <div class="cert-embed-footer">
+            <div><h4>Network Security Architecture</h4><span>Cisco Networking Academy</span></div>
+            <button class="cert-expand-btn" onclick="openPDF('certs/cert-e42b.pdf','Network Security Certificate')">⛶ Expand</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// let's connect</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-desc">I'm actively seeking full-time opportunities. Whether you have a role, a project, or just want to chat about AI — I'd love to hear from you!</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card" id="contactLinkedIn">
+          <div class="contact-icon">in</div>
+          <h4>LinkedIn</h4>
+          <p>Connect with me professionally</p>
+          <a href="https://www.linkedin.com/in/shubh-namdeo" target="_blank" class="contact-link">View Profile →</a>
+        </div>
+        <div class="contact-card" id="contactGitHub">
+          <div class="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <h4>GitHub</h4>
+          <p>Check out my code & projects</p>
+          <a href="https://github.com/Shubhnamdeo" target="_blank" class="contact-link">View Repository →</a>
+        </div>
+        <div class="contact-card contact-ai" id="contactAI">
+          <div class="contact-icon ai-icon-glow">✦</div>
+          <h4>Ask My AI Assistant</h4>
+          <p>Chat with an AI that knows everything about me</p>
+          <button class="contact-link-btn" id="contactAskBtn">Start Chatting →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <span class="footer-logo"><span class="logo-bracket">&lt;</span>SN<span class="logo-bracket">/&gt;</span></span>
+        <p>© 2026 Shubh Namdeo. Built with ❤️ and a touch of AI.</p>
+        <p class="footer-sub">Greater Jabalpur, India · Open to Work</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== AI CHAT WIDGET ===== -->
+  <div class="chat-fab" id="chatFab" title="Ask AI about Shubh">
+    <div class="fab-pulse"></div>
+    <span class="fab-icon">✦</span>
+    <span class="fab-label">AI</span>
+  </div>
+
+  <div class="chat-modal" id="chatModal" role="dialog" aria-label="AI Chat Assistant" aria-modal="true">
+    <div class="chat-panel">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">✦</div>
+          <div>
+            <h3>Shubh's AI Assistant</h3>
+            <span class="chat-status">
+              <span class="status-dot online"></span> Online & ready to help
+            </span>
+          </div>
+        </div>
+        <button class="chat-close" id="chatClose" aria-label="Close chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message ai-message">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-bubble">
+            <p>Hi! I'm Shubh's AI assistant. I know everything about his skills, experience, certifications, and career goals. Ask me anything! 🚀</p>
+            <div class="quick-questions">
+              <button class="quick-q" data-q="What are Shubh's top skills?">Top skills?</button>
+              <button class="quick-q" data-q="Tell me about Shubh's experience">His experience?</button>
+              <button class="quick-q" data-q="What certifications does Shubh have?">Certifications?</button>
+              <button class="quick-q" data-q="Is Shubh available for work?">Available for work?</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-typing" id="chatTyping">
+        <div class="msg-avatar">✦</div>
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Ask me about Shubh..." aria-label="Ask about Shubh" autocomplete="off" />
+        <button class="chat-send" id="chatSend" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+      <p class="chat-disclaimer">Powered by built-in AI knowledge about Shubh Namdeo</p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>
