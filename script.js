@@ -346,11 +346,12 @@ chatModal.addEventListener('click', (e) => {
   if (e.target === chatModal) closeChat();
 });
 
-// Quick questions
-document.querySelectorAll('.quick-q').forEach(btn => {
-  btn.addEventListener('click', () => {
+// Quick questions event delegation
+chatMsgs.addEventListener('click', (e) => {
+  const btn = e.target.closest('.quick-q');
+  if (btn && btn.dataset.q) {
     sendMessage(btn.dataset.q);
-  });
+  }
 });
 
 function addMessage(text, role = 'ai') {
