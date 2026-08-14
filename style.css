@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    SHUBH NAMDEO PORTFOLIO — MAIN STYLESHEET
    ============================================ */
 
@@ -294,11 +294,12 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.6rem, 5.2vw, 4.2rem);
   font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-top: 8px;
+  margin-bottom: 24px;
   animation: fadeInDown 0.7s ease 0.1s both;
 }
 
