@@ -143,9 +143,21 @@ function getAIResponse(question) {
   }
 
   // ── Experience / internship / work
-  if (/experience|internship|work|job|employ|smartbridge|salesforce developer|agentblazer|lastmile|last.mile/.test(q)) {
-    const exp = kb.experience[0];
-    return `**${exp.role}** @ ${exp.company} ✅ Current\n📅 ${exp.duration} (${exp.months})\n\n**Key Achievements:**\n${exp.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Tech Used:** ${exp.techStack.join(', ')}`;
+  if (/experience|internship|work|job|employ|smartbridge|salesforce|learning routes|sales associate|agentblazer|lastmile|last.mile/.test(q)) {
+    const list = kb.experience.map(e => `🔹 **${e.role}** @ ${e.company} ${e.current ? '✅ (Current)' : ''}\n📅 ${e.duration}\n🛠️ **Skills:** ${e.techStack.join(', ')}`).join('\n\n');
+    return `Here is Shubh's professional experience 💼\n\n${list}\n\nAsk me about any specific role for more details!`;
+  }
+
+  // ── Learning Routes specific
+  if (/learning routes|sales associate|sales/.test(q)) {
+    const lr = kb.experience[0];
+    return `💼 **${lr.role}** @ ${lr.company} ✅ Current\n📅 ${lr.duration}\n\n**Highlights:**\n${lr.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Key Skills:** ${lr.techStack.join(', ')}`;
+  }
+
+  // ── Salesforce specific
+  if (/salesforce|smartbridge|lastmile|agentblazer/.test(q)) {
+    const sb = kb.experience[1];
+    return `⚡ **${sb.role}** @ ${sb.company}\n📅 ${sb.duration} (${sb.months})\n\n**Key Achievements:**\n${sb.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Tech Stack:** ${sb.techStack.join(', ')}`;
   }
 
   // ── Certifications
@@ -237,7 +249,7 @@ function getAIResponse(question) {
   }
 
   // ── Default fallback
-  return `Great question! Based on what I know about Shubh:\n\nHe's a **Software Engineer** specializing in **AI Agents, Backend Development, Python, Node.js, and GenAI**. With 15+ certifications and a 10-month enterprise internship at SmartBridge, he's currently seeking full-time opportunities.\n\n📬 For a direct conversation, reach him on **LinkedIn**: linkedin.com/in/shubh-namdeo\n\nOr try asking me something more specific like:\n• "What are his top skills?"\n• "Tell me about his certifications"\n• "Is he open to remote work?"`;
+  return `Great question! Here's a quick summary of Shubh:\n\nHe's a **Software Engineer** specializing in **AI Agents, Backend Development, Python, Node.js, and GenAI**.\n\n💼 **Current Work:** Sales Associate at Learning Routes Pvt. Ltd.\n⚡ **Tech Experience:** Salesforce AI Agent Developer Trainee (SmartBridge, 6 months)\n🏆 **Certifications:** 18+ verified credentials (AWS, Cisco, Prompt Engineering, Google Cloud Badges)\n\n📬 Reach him on **LinkedIn**: linkedin.com/in/shubh-namdeo\n\nOr ask me something specific like:\n• "What are his top skills?"\n• "Tell me about his work experience"\n• "What certifications does he have?"`;
 }
 
 // ─── Typewriter Effect ────────────────────────────────────────────
