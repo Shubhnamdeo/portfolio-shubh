@@ -6,25 +6,46 @@
 const SHUBH_KNOWLEDGE = {
   name: "Shubh Namdeo",
   pronouns: "He/Him",
-  title: "Software Engineer | AI Agents & Backend Development | Python, Node.js, GenAI",
-  location: "Greater Jabalpur Area, India",
+  title: "Software Engineer | Full-Stack & Backend Development | Python, Node.js, Java",
+  location: "Andheri East, Mumbai, Maharashtra, India",
+  email: "shubhnamdeo15@gmail.com",
+  phone: "+91 7000312723",
   workPreference: "Open to On-site, Hybrid, and Remote roles across India",
-  status: "Actively seeking full-time opportunities",
+  status: "Actively seeking full-time Graduate Engineer & Software Developer roles",
   github: "https://github.com/Shubhnamdeo",
   linkedin: "https://www.linkedin.com/in/shubh-namdeo",
 
-  about: `Shubh Namdeo is a Software Engineer specializing in backend architecture, cloud infrastructure, and Generative AI integration. 
-  With experience as a Sales Associate at Learning Routes and a 6-month enterprise internship as a Salesforce AI Agent Developer, 
-  he has built scalable, AI-powered applications that handle real-time data. He is passionate about Generative AI 
-  and actively seeks to push boundaries in AI agent development and cloud-native backend systems.`,
+  about: `Shubh Namdeo is a Results-driven Software Engineer with a strong foundation in full-stack development, backend architecture, and automated business logic. 
+  Proficient in Python, Java, Node.js, Express.js, and the MERN stack. Experienced in building scalable commercial applications, designing secure RESTful APIs, 
+  and optimizing database performance. Eager to leverage analytical problem-solving skills to build robust, user-centric technology solutions as a Graduate Engineer.`,
 
   education: {
-    degree: "Bachelor of Technology (B.Tech) in Computer Science",
-    institution: "Gyan Ganga Institute of Technology Sciences (GGITS)",
-    duration: "May 2022 – June 2026",
+    degree: "Bachelor of Technology (B.Tech) in Computer Science and Engineering",
+    institution: "Gyan Ganga Institute of Technology & Sciences (RGPV), Jabalpur",
+    duration: "May 2022 – May 2026",
     cgpa: "7.39",
-    skills: ["Programming", "Communication", "Data Structures", "Algorithms"]
+    skills: ["Data Structures & Algorithms", "Database Management Systems", "Object-Oriented Programming", "Operating Systems"]
   },
+
+  projects: [
+    {
+      title: "Topper’s Matrix Classes (Paid Freelance Project)",
+      url: "https://toppers-matrix-classes.onrender.com",
+      tech: ["Node.js", "Express.js", "MongoDB", "Full-Stack Development"],
+      description: "Acted as the sole developer to architect, build, and deploy a commercial educational platform. Implemented secure user authentication, class scheduling, and optimized MongoDB query performance."
+    },
+    {
+      title: "Events Hub - Event Management Application",
+      tech: ["Cloud Platform", "LWC", "Apex", "Full-Stack"],
+      description: "Developed a scalable event management application to streamline user registration, tracking workflows, and large-scale data synchronization with modern frontend components."
+    },
+    {
+      title: "Interactive Professional Portfolio",
+      url: "https://shubhnamdeo.github.io/portfolio-shubh",
+      tech: ["Frontend Architecture", "Responsive UI", "Git", "Vanilla JS"],
+      description: "Developed and deployed a responsive web portfolio featuring custom AI assistant integration and embedded 3xN certificate verification matrix."
+    }
+  ],
 
   experience: [
     {
@@ -41,21 +62,19 @@ const SHUBH_KNOWLEDGE = {
       techStack: ["Consultative Sales", "CRM Systems", "Client Relationship", "Data Management"]
     },
     {
-      role: "Salesforce AI Agent Developer Trainee",
+      role: "Enterprise Software Developer (Intern)",
       company: "SmartBridge (LastMile Program)",
-      duration: "April 2025 – January 2026",
-      months: "6 months",
+      duration: "June 2025 – January 2026",
+      months: "8 months",
       location: "India",
       current: false,
       highlights: [
-        "Developed automated business logic utilizing Salesforce AI and Apex, streamlining user interactions and significantly improving system response efficiency",
-        "Navigated complex cloud environments to ensure all system actions rigorously complied with procedural guidelines and enterprise architecture standards",
-        "Configured Field-Level Security (FLS) protocols to guarantee data privacy and structural integrity, aligning with modern data protection standards",
-        "Participated in the 100K Agentblazer Champions Program, actively configuring and deploying Salesforce AI agents",
-        "Attended a 3-Day National Workshop to expand Agentforce expertise",
-        "Completed a Capstone Project demonstrating the real-world application of AI Agents in Salesforce"
+        "Developed automated business logic utilizing object-oriented programming, streamlining enterprise user interactions and improving system response efficiency",
+        "Configured advanced authentication and Field-Level Security protocols to ensure data privacy and structural integrity",
+        "Participated in the software development lifecycle, executing rigorous debugging and optimizing backend algorithmic performance",
+        "Collaborated with cross-functional teams to analyze system requirements and implement secure, scalable data processing solutions"
       ],
-      techStack: ["Salesforce", "Apex", "AI Agents", "Agentforce", "FLS Security", "Einstein Agent"]
+      techStack: ["Python", "Java", "Apex", "REST APIs", "FLS Security", "Agile Development"]
     }
   ],
 
@@ -219,8 +238,9 @@ function getAIResponse(question) {
   }
 
   // ── GitHub / projects
-  if (/github|project|portfolio|code|repo|repository/.test(q)) {
-    return `🐙 **Check out Shubh's GitHub!**\n\n🔗 github.com/Shubhnamdeo\n\nHis GitHub profile showcases his projects and code. He regularly commits and builds real-world applications combining AI with backend development.\n\nYou can also find his LinkedIn featured section highlighting his open-source work!`;
+  if (/github|project|topper|matrix|events hub|portfolio|code|repo|repository/.test(q)) {
+    const pList = kb.projects.map(p => `🚀 **${p.title}**\n${p.description}\n🛠️ **Tech:** ${p.tech.join(' • ')}${p.url ? `\n🔗 ${p.url}` : ''}`).join('\n\n');
+    return `Here are Shubh's key featured projects 💻\n\n${pList}\n\nCheck out all his repositories at 🐙 github.com/Shubhnamdeo!`;
   }
 
   // ── Contact
