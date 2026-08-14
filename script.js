@@ -22,7 +22,7 @@ const SHUBH_KNOWLEDGE = {
     degree: "Bachelor of Technology (B.Tech) in Computer Science",
     institution: "Gyan Ganga Institute of Technology Sciences (GGITS)",
     duration: "May 2022 – June 2026",
-    cgpa: "7.37",
+    cgpa: "7.39",
     skills: ["Programming", "Communication", "Data Structures", "Algorithms"]
   },
 
