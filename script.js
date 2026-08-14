@@ -14,9 +14,9 @@ const SHUBH_KNOWLEDGE = {
   linkedin: "https://www.linkedin.com/in/shubh-namdeo",
 
   about: `Shubh Namdeo is a Software Engineer specializing in backend architecture, cloud infrastructure, and Generative AI integration. 
-  Through a recent 6-month enterprise internship and his B.Tech in Computer Science, he has built scalable, AI-powered applications 
-  that handle real-time data for hundreds of users. He is passionate about Generative AI and actively seeks to push boundaries 
-  in AI agent development and cloud-native backend systems.`,
+  With experience as a Sales Associate at Learning Routes and a 6-month enterprise internship as a Salesforce AI Agent Developer, 
+  he has built scalable, AI-powered applications that handle real-time data. He is passionate about Generative AI 
+  and actively seeks to push boundaries in AI agent development and cloud-native backend systems.`,
 
   education: {
     degree: "Bachelor of Technology (B.Tech) in Computer Science",
@@ -230,7 +230,7 @@ function getAIResponse(question) {
 
   // ── Interests / hobbies
   if (/interest|passion|hobby|like|love|enjoy/.test(q)) {
-    return `💡 **Shubh's Passions:**\n\n${kb.interests.map(i => `• ${i}`).join('\n')}\n\nHe's driven by continuous learning — just look at his 15+ certifications! He posts regularly on LinkedIn about his learning journey and achievements. 🚀`;
+    return `💡 **Shubh's Passions:**\n\n${kb.interests.map(i => `• ${i}`).join('\n')}\n\nHe's driven by continuous learning — just look at his 18+ certifications! He posts regularly on LinkedIn about his learning journey and achievements. 🚀`;
   }
 
   // ── LinkedIn / stats
@@ -240,7 +240,7 @@ function getAIResponse(question) {
 
   // ── Fun facts
   if (/fun fact|surprising|interesting|unique|special/.test(q)) {
-    return `🎉 **Fun Facts about Shubh:**\n\n• He has earned **15+ certifications** — and counting!\n• Part of the elite **100K Agentblazer Champions Program** by Salesforce\n• Earned **3 Google Cloud Skill Badges** in AI/ML in 2025\n• His LinkedIn post on Einstein Agent got **1,555 impressions!**\n• He started his B.Tech in 2022 and is graduating in 2026 — in that time, he's packed in an incredible amount of upskilling 💪`;
+    return `🎉 **Fun Facts about Shubh:**\n\n• He has earned **18+ certifications** — and counting!\n• Part of the elite **100K Agentblazer Champions Program** by Salesforce\n• Earned **3 Google Cloud Skill Badges** in AI/ML in 2025\n• Currently working as a Sales Associate at Learning Routes Pvt. Ltd.\n• Completed a 6-month enterprise internship as a Salesforce AI Agent Developer`;
   }
 
   // ── What can you ask
