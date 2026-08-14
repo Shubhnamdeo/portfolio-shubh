@@ -179,9 +179,9 @@ function getAIResponse(question) {
   }
 
   // ── Education
-  if (/education|study|college|university|degree|btech|b\.tech|ggits|gyan ganga|cgpa|grade/.test(q)) {
+  if (/education|study|college|university|degree|btech|b\.tech|ggits|gyan ganga|grade/.test(q)) {
     const edu = kb.education;
-    return `🎓 **${edu.degree}**\n🏫 ${edu.institution}\n📅 ${edu.duration}\n📊 CGPA: **${edu.cgpa}**\n\nSkills developed: ${edu.skills.join(', ')}`;
+    return `🎓 **${edu.degree}**\n🏫 ${edu.institution}\n📅 ${edu.duration}\n\nSkills developed: ${edu.skills.join(', ')}`;
   }
 
   // ── Location / remote
