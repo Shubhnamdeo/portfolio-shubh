@@ -28,12 +28,25 @@ const SHUBH_KNOWLEDGE = {
 
   experience: [
     {
+      role: "Sales Associate",
+      company: "Learning Routes Pvt. Ltd.",
+      duration: "2026 – Present",
+      location: "India",
+      current: true,
+      highlights: [
+        "Managed client communications, lead pipelines, and consultative advisory for higher education solutions",
+        "Utilized CRM platforms to track customer data, analyze sales conversion metrics, and maintain lead databases",
+        "Demonstrated high adaptability, strategic communication, and enterprise negotiation skills"
+      ],
+      techStack: ["Consultative Sales", "CRM Systems", "Client Relationship", "Data Management"]
+    },
+    {
       role: "Salesforce AI Agent Developer Trainee",
       company: "SmartBridge (LastMile Program)",
       duration: "April 2025 – January 2026",
       months: "6 months",
       location: "India",
-      current: true,
+      current: false,
       highlights: [
         "Developed automated business logic utilizing Salesforce AI and Apex, streamlining user interactions and significantly improving system response efficiency",
         "Navigated complex cloud environments to ensure all system actions rigorously complied with procedural guidelines and enterprise architecture standards",
