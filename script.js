@@ -49,19 +49,6 @@ const SHUBH_KNOWLEDGE = {
 
   experience: [
     {
-      role: "Sales Associate",
-      company: "Learning Routes Pvt. Ltd.",
-      duration: "2026 – Present",
-      location: "India",
-      current: true,
-      highlights: [
-        "Managed client communications, lead pipelines, and consultative advisory for higher education solutions",
-        "Utilized CRM platforms to track customer data, analyze sales conversion metrics, and maintain lead databases",
-        "Demonstrated high adaptability, strategic communication, and enterprise negotiation skills"
-      ],
-      techStack: ["Consultative Sales", "CRM Systems", "Client Relationship", "Data Management"]
-    },
-    {
       role: "Enterprise Software Developer (Intern)",
       company: "SmartBridge (LastMile Program)",
       duration: "June 2025 – January 2026",
@@ -162,20 +149,14 @@ function getAIResponse(question) {
   }
 
   // ── Experience / internship / work
-  if (/experience|internship|work|job|employ|smartbridge|salesforce|learning routes|sales associate|agentblazer|lastmile|last.mile/.test(q)) {
-    const list = kb.experience.map(e => `🔹 **${e.role}** @ ${e.company} ${e.current ? '✅ (Current)' : ''}\n📅 ${e.duration}\n🛠️ **Skills:** ${e.techStack.join(', ')}`).join('\n\n');
+  if (/experience|internship|work|job|employ|smartbridge|salesforce|agentblazer|lastmile|last.mile/.test(q)) {
+    const list = kb.experience.map(e => `🔹 **${e.role}** @ ${e.company}\n📅 ${e.duration}\n🛠️ **Skills:** ${e.techStack.join(', ')}`).join('\n\n');
     return `Here is Shubh's professional experience 💼\n\n${list}\n\nAsk me about any specific role for more details!`;
   }
 
-  // ── Learning Routes specific
-  if (/learning routes|sales associate|sales/.test(q)) {
-    const lr = kb.experience[0];
-    return `💼 **${lr.role}** @ ${lr.company} ✅ Current\n📅 ${lr.duration}\n\n**Highlights:**\n${lr.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Key Skills:** ${lr.techStack.join(', ')}`;
-  }
-
-  // ── Salesforce specific
+  // ── Salesforce / SmartBridge specific
   if (/salesforce|smartbridge|lastmile|agentblazer/.test(q)) {
-    const sb = kb.experience[1];
+    const sb = kb.experience[0];
     return `⚡ **${sb.role}** @ ${sb.company}\n📅 ${sb.duration} (${sb.months})\n\n**Key Achievements:**\n${sb.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Tech Stack:** ${sb.techStack.join(', ')}`;
   }
 
@@ -260,7 +241,7 @@ function getAIResponse(question) {
 
   // ── Fun facts
   if (/fun fact|surprising|interesting|unique|special/.test(q)) {
-    return `🎉 **Fun Facts about Shubh:**\n\n• He has earned **18+ certifications** — and counting!\n• Part of the elite **100K Agentblazer Champions Program** by Salesforce\n• Earned **3 Google Cloud Skill Badges** in AI/ML in 2025\n• Currently working as a Sales Associate at Learning Routes Pvt. Ltd.\n• Completed a 6-month enterprise internship as a Salesforce AI Agent Developer`;
+    return `🎉 **Fun Facts about Shubh:**\n\n• He has earned **18+ certifications** — and counting!\n• Part of the elite **100K Agentblazer Champions Program** by Salesforce\n• Earned **3 Google Cloud Skill Badges** in AI/ML in 2025\n• Acted as the sole developer for commercial EdTech platform Topper's Matrix Classes\n• Completed an enterprise software development internship at SmartBridge`;
   }
 
   // ── What can you ask
@@ -269,7 +250,7 @@ function getAIResponse(question) {
   }
 
   // ── Default fallback
-  return `Great question! Here's a quick summary of Shubh:\n\nHe's a **Software Engineer** specializing in **AI Agents, Backend Development, Python, Node.js, and GenAI**.\n\n💼 **Current Work:** Sales Associate at Learning Routes Pvt. Ltd.\n⚡ **Tech Experience:** Salesforce AI Agent Developer Trainee (SmartBridge, 6 months)\n🏆 **Certifications:** 18+ verified credentials (AWS, Cisco, Prompt Engineering, Google Cloud Badges)\n\n📬 Reach him on **LinkedIn**: linkedin.com/in/shubh-namdeo\n\nOr ask me something specific like:\n• "What are his top skills?"\n• "Tell me about his work experience"\n• "What certifications does he have?"`;
+  return `Great question! Here's a quick summary of Shubh:\n\nHe's a **Software Engineer** specializing in **Full-Stack & Backend Development (Python, Java, Node.js, MERN stack)**.\n\n⚡ **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n🚀 **Featured Project:** Topper's Matrix Classes (Paid Freelance Commercial Platform)\n🏆 **Certifications:** 18+ verified credentials (AWS, Cisco, Prompt Engineering, Google Cloud Badges)\n\n📬 Reach him on **LinkedIn**: linkedin.com/in/shubh-namdeo\n\nOr ask me something specific like:\n• "What are his top skills?"\n• "Tell me about his projects"\n• "What certifications does he have?"`;
 }
 
 // ─── Typewriter Effect ────────────────────────────────────────────
