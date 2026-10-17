@@ -43,7 +43,7 @@ const SHUBH_KNOWLEDGE = {
       title: "Interactive Professional Portfolio",
       url: "https://shubhnamdeo.github.io/portfolio-shubh",
       tech: ["Frontend Architecture", "Responsive UI", "Git", "Vanilla JS"],
-      description: "Developed and deployed a responsive web portfolio featuring custom AI assistant integration and embedded 3xN certificate verification matrix."
+      description: "Developed and deployed a responsive web portfolio featuring custom AI assistant integration and embedded certificate verification matrix."
     }
   ],
 
