@@ -126,131 +126,229 @@ const SHUBH_KNOWLEDGE = {
 
 // ─── AI Response Engine ────────────────────────────────────────────
 function getAIResponse(question) {
-  const q = question.toLowerCase().trim();
+  if (!question || typeof question !== 'string') {
+    return "Hi! Please feel free to ask me anything about Shubh's skills, projects, experience, or contact details.";
+  }
+
+  const rawQ = question.trim();
+  const q = rawQ.toLowerCase();
   const kb = SHUBH_KNOWLEDGE;
 
   // Helper to list certs by category
   const certsByCategory = (cat) =>
     kb.certifications.filter(c => c.category === cat).map(c => `• **${c.name}** — ${c.issuer}`).join('\n');
 
-  // ── Greeting / intro
-  if (/^(hi|hello|hey|howdy|sup|yo)\b/.test(q)) {
-    return `Hey there! 👋 I'm Shubh's AI assistant. I know all about his skills, experience, certifications, and career journey.\n\nFeel free to ask me anything — like "What are his skills?", "Tell me about his internship", or "Is he looking for a job?"`;
+  // Strip leading conversational phrases (e.g., "can you tell me", "please tell me", "what is", "can I ask about")
+  const cleanQ = q
+    .replace(/^(hi|hello|hey|greetings|dear ai)\b[,!\s]*/i, '')
+    .replace(/^(can i ask|may i ask|i have a question|quick question|ask a question|ask you something|i want to ask)(\s+you)?(\s+something|\s+a question)?\s*(about|regarding)?\s*/i, '')
+    .replace(/^(please\s+|can you\s+|could you\s+|do you know\s+|i want to know\s+|tell me\s+|what is\s+|what are\s+|how about\s+)+/i, '')
+    .trim();
+
+  // ── 1. Chit-chat & Courtesies
+  if (/^(thanks|thank you|thx|tysm|appreciate it)\b/i.test(q)) {
+    return `You're very welcome! 😊 Feel free to ask anything else about Shubh, or connect with him directly on LinkedIn at **linkedin.com/in/shubh-namdeo**.`;
+  }
+  if (/^(bye|goodbye|see you|cya|take care)\b/i.test(q)) {
+    return `Thanks for visiting Shubh's portfolio! Have a wonderful day, and don't hesitate to reach out if you'd like to collaborate or discuss opportunities. 👋`;
+  }
+  if (/^(cool|awesome|great|nice|perfect|super|sounds good|okay|ok|got it)\b/i.test(q) && q.split(' ').length <= 3) {
+    return `Glad I could help! Would you like to explore his **projects**, inspect his **certifications**, or get his **contact information**?`;
+  }
+  if (/\b(who created you|who made you|are you an ai|what are you|who are you)\b/i.test(q)) {
+    return `I am **Shubh Namdeo's AI Portfolio Assistant** 🤖! I was built using custom JavaScript and client-side knowledge modeling to help recruiters, engineers, and visitors explore Shubh's technical skillset, projects, experience, and certifications in real-time.`;
   }
 
-  // ── Name / who
-  if (/who (is|are) (shubh|he|you)|tell me about (shubh|him|yourself)/.test(q) || /about shubh/.test(q)) {
-    return `**Shubh Namdeo** is a Software Engineer from Greater Jabalpur, India 🇮🇳\n\n${kb.about}\n\n🔑 **Core Stack:** Python, Node.js, AWS, MongoDB, Salesforce, Prompt Engineering\n\n📍 Open to On-site, Hybrid & Remote opportunities across India.`;
+  // Pure greetings or standalone "Can I ask a question?" with no topic attached
+  const cleanQLetters = cleanQ.replace(/[^a-z0-9]/gi, '');
+  if (!cleanQLetters) {
+    if (/^(hi|hello|hey|howdy|sup|yo|good morning|good afternoon|good evening)\b/i.test(q)) {
+      return `Hey there! 👋 I'm Shubh's interactive AI assistant. I know all about his engineering skills, commercial projects, SmartBridge internship, and 18+ certifications.\n\nWhat would you like to know?\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top skills?</button><button class="quick-q" data-q="Tell me about Shubh's projects">Projects?</button><button class="quick-q" data-q="Tell me about his work experience">Experience?</button><button class="quick-q" data-q="What is his contact info?">Contact?</button></div>`;
+    }
+    if (/^(can i ask|may i ask|i have a question|quick question|ask a question|ask you something|i want to ask)\b/i.test(q)) {
+      return `Of course! 😊 Go right ahead and ask me anything about Shubh's projects, technical skills, SmartBridge internship, education, or contact details.\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Projects</button><button class="quick-q" data-q="Tell me about his work experience">Experience</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button></div>`;
+    }
   }
 
-  // ── Skills
-  if (/skill|tech|stack|know|proficient|good at|expertise|language|framework/.test(q)) {
-    return `Here's Shubh's technical arsenal 🛠️\n\n🤖 **AI & GenAI:** ${kb.skills.aiML.slice(0,6).join(', ')}\n\n💻 **Languages:** ${kb.skills.languages.join(', ')}\n\n☁️ **Cloud & Infra:** ${kb.skills.cloud.join(', ')}\n\n📊 **Data & Analytics:** ${kb.skills.data.join(', ')}\n\n**Top 5 LinkedIn Skills:** ${kb.topSkills.join(' • ')}`;
+  // ── 2. Help / Menu / Capabilities (STRICT check so normal questions with "ask" don't trigger this!)
+  if (/^(help|help me|what can you do|what can i ask|commands|menu|options|how to use|features)$/i.test(q) ||
+      (/^(what can (you|i) (do|ask)|what questions can i ask)/i.test(q) && q.split(' ').length <= 6)) {
+    return `Here are some great topics you can ask me about:\n\n💻 **Technical Skills:** "What programming languages does he know?" or "Does he know Python and Node.js?"\n🚀 **Projects:** "Tell me about Topper's Matrix Classes" or "Show me his projects"\n💼 **Experience:** "Tell me about his SmartBridge internship"\n🤖 **AI & GenAI:** "Tell me about his AI experience"\n🎓 **Education:** "Where did he study?" or "What is his CGPA?"\n🏆 **Certifications:** "Show me his Google Cloud and AWS badges"\n📍 **Location & Hiring:** "Where is he based?" or "Is he available for hire?"\n📬 **Contact:** "What is his email or phone number?"\n📄 **Resume:** "Can I see his resume?"\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Topper's Matrix</button><button class="quick-q" data-q="Tell me about his work experience">Internship</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button></div>`;
   }
 
-  // ── Experience / internship / work
-  if (/experience|internship|work|job|employ|smartbridge|salesforce|agentblazer|lastmile|last.mile/.test(q)) {
-    const list = kb.experience.map(e => `🔹 **${e.role}** @ ${e.company}\n📅 ${e.duration}\n🛠️ **Skills:** ${e.techStack.join(', ')}`).join('\n\n');
-    return `Here is Shubh's professional experience 💼\n\n${list}\n\nAsk me about any specific role for more details!`;
+  // ── 3. Resume / CV / Biodata
+  if (/\b(resume|cv|curriculum vitae|biodata|profile pdf)\b/i.test(q)) {
+    return `📄 **Shubh Namdeo's Resume Summary:**\n\n• **Title:** Results-driven Software Engineer (B.Tech CSE, graduating May 2026)\n• **Core Stack:** Python, Java, Node.js, Express.js, MongoDB, AWS, Salesforce, RESTful APIs\n• **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n• **Key Projects:** Topper's Matrix Classes (Commercial Platform) & Events Hub\n• **Contact:** ${kb.email} | ${kb.phone}\n• **Location:** ${kb.location}\n\nYou can review all detailed credentials right here on this portfolio or reach out directly to request the latest PDF copy! 📬`;
   }
 
-  // ── Salesforce / SmartBridge specific
-  if (/salesforce|smartbridge|lastmile|agentblazer/.test(q)) {
+  // ── 4. AI & GenAI Experience (Checked before general experience so "AI experience" triggers this)
+  if (/\b(ai|genai|generative ai|llm|llms|agent development kit|adk|vertex ai|gemini|rag|prompt engineering|einstein|agentforce)\b/i.test(q)) {
+    return `🤖 **AI, GenAI & Prompt Engineering Experience:**\n\nShubh has demonstrated deep hands-on expertise with cutting-edge AI technologies:\n\n• **Google Cloud Skill Badges:**\n  → *Engineer AI Agents with Agent Development Kit (ADK)*\n  → *Inspect Rich Documents with Gemini Multimodality and Multimodal RAG*\n  → *Prompt Design in Vertex AI*\n• **Salesforce Agentic AI:** Selected for the elite **100K Agentblazer Champions Program**, building autonomous AI agent workflows.\n• **Prompt Engineering:** Certified by Simplilearn in advanced techniques including Chain-of-Thought (CoT), Few-Shot prompting, and hallucination reduction.\n• **AI Application Development:** Integrating Gemini and LLM APIs into Python and Node.js backend services.`;
+  }
+
+  // ── 5. Specific Projects
+  if (/topper|matrix|commercial platform|freelance/i.test(q)) {
+    const p = kb.projects[0];
+    return `🚀 **${p.title}**\n\n${p.description}\n\n🛠️ **Tech Stack:** ${p.tech.join(' • ')}\n🔗 **Live Demo:** ${p.url}\n\nKey highlights:\n→ Architected, built, and deployed as the sole developer\n→ Implemented secure user authentication and class scheduling workflows\n→ Optimized MongoDB database queries and API response times for high concurrent traffic.`;
+  }
+
+  if (/events? hub|event management/i.test(q)) {
+    const p = kb.projects[1];
+    return `⚡ **${p.title}**\n\n${p.description}\n\n🛠️ **Tech Stack:** ${p.tech.join(' • ')}\n\nKey highlights:\n→ Scalable event management and user registration workflows\n→ Built with modern Lightning Web Components (LWC) and Apex backend controllers\n→ Relational data modeling and high-integrity data processing.`;
+  }
+
+  if (/portfolio( project| website)?|this website|shubh.*portfolio/i.test(q)) {
+    const p = kb.projects[2];
+    return `💻 **${p.title}**\n\n${p.description}\n\n🛠️ **Tech Stack:** ${p.tech.join(' • ')}\n🔗 **Live URL:** ${p.url}\n🐙 **GitHub Repo:** github.com/Shubhnamdeo/portfolio-shubh\n\nBuilt with clean semantic HTML5, modern CSS3 animations, and an intelligent client-side AI knowledge assistant!`;
+  }
+
+  // General Projects
+  if (/\b(projects?|apps?|applications?|what (did|has) he built|code sample|portfolio work|github repo|repositories)\b/i.test(q)) {
+    const pList = kb.projects.map(p => `🚀 **${p.title}**\n${p.description}\n🛠️ **Tech:** ${p.tech.join(' • ')}${p.url ? `\n🔗 [Live Link](${p.url})` : ''}`).join('\n\n');
+    return `Here are Shubh's key featured projects 💻\n\n${pList}\n\nCheck out all his open-source work on GitHub at 🐙 **github.com/Shubhnamdeo**!`;
+  }
+
+  // ── 6. Experience / Internship / SmartBridge
+  if (/\b(experience|internship|intern|smartbridge|smart bridge|lastmile|last mile|work history|career|job history)\b/i.test(q)) {
     const sb = kb.experience[0];
-    return `⚡ **${sb.role}** @ ${sb.company}\n📅 ${sb.duration} (${sb.months})\n\n**Key Achievements:**\n${sb.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Tech Stack:** ${sb.techStack.join(', ')}`;
+    return `💼 **Professional Experience:**\n\n⚡ **${sb.role}**\n🏢 **${sb.company}**\n📅 **${sb.duration} (${sb.months})**\n\n**Key Contributions:**\n${sb.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Technologies Used:** ${sb.techStack.join(', ')}`;
   }
 
-  // ── Certifications
-  if (/certif|cert|badge|credential|award|completed|course/.test(q)) {
-    const total = kb.certifications.length;
-    if (/google|gcp|cloud skill/.test(q)) {
-      return `☁️ **Google Cloud Skill Badges (3):**\n\n${kb.googleCloudBadges.map(b => `🏅 ${b}`).join('\n')}\n\nAll issued by **Google Cloud** via Credly.`;
-    }
-    if (/ai|machine learning|ml|prompt|gemini|genai/.test(q)) {
-      return `🤖 **AI & ML Certifications:**\n\n${certsByCategory('AI')}\n\nShubh is deeply committed to mastering AI — from prompt engineering to building full AI agents!`;
-    }
-    if (/salesforce|agentforce|einstein/.test(q)) {
-      return `⚡ **Salesforce Certifications:**\n\n${certsByCategory('Salesforce')}\n\nHe completed the prestigious LastMile Program and the 100K Agentblazer Champions Program!`;
-    }
-    if (/aws|amazon|cloud/.test(q)) {
-      return `☁️ **Cloud Certifications:**\n\n${certsByCategory('Cloud')}\n${certsByCategory('Security')}\n\nAWS Academy Graduate + CCSK certified.`;
-    }
-    return `🏆 Shubh has earned **${total}+ certifications** across multiple domains!\n\n🤖 **AI/ML:** Google Cloud ADK, Vertex AI, Gemini RAG, Prompt Engineering\n⚡ **Salesforce:** AI Developer, Agentblazer Champion\n☁️ **Cloud:** AWS, CCSK Cloud Security\n🔐 **Security:** Cisco Cybersecurity Essentials, Intro to Cybersecurity\n💻 **Programming:** C++, Java, Linux Essentials\n📊 **Data:** Power BI, Data Science\n\nAsk me about any specific category! 🎯`;
+  // ── 7. Job Search / Hiring / Availability
+  if (/\b(availab|looking for (a )?job|hire|hiring|open to work|recruit|seeking|salary|notice period|join|roles?)\b/i.test(q)) {
+    return `✅ **Yes! Shubh is actively seeking full-time Graduate Engineer & Software Developer roles!**\n\n🎓 Graduating in **May 2026** and open to immediate start or summer 2026 cohorts.\n\n**Target Roles:**\n• Software Engineer / Backend Engineer\n• Full-Stack Developer (MERN Stack)\n• AI / GenAI Software Engineer\n• Cloud & Salesforce Developer\n\n📍 **Work Preferences:** On-site (Mumbai & across India), Hybrid, or Remote.\n📬 **Connect directly:** ${kb.email} | **LinkedIn:** linkedin.com/in/shubh-namdeo`;
   }
 
-  // ── Education
-  if (/education|study|college|university|degree|btech|b\.tech|ggits|gyan ganga|grade/.test(q)) {
+  // ── 8. Contact Details (Email, Phone, LinkedIn, GitHub)
+  if (/\b(contact|reach|email|mail|phone|mobile|number|call|whatsapp|message|talk|connect|linkedin|github link)\b/i.test(q)) {
+    return `📬 **Get in touch with Shubh Namdeo:**\n\n📧 **Email:** ${kb.email}\n📞 **Phone:** ${kb.phone}\n📍 **Location:** ${kb.location}\n🔗 **LinkedIn:** linkedin.com/in/shubh-namdeo\n🐙 **GitHub:** github.com/Shubhnamdeo\n\nHe responds promptly to emails and LinkedIn messages! 😊`;
+  }
+
+  // ── 9. Education, College, CGPA & Coursework
+  if (/\b(education|college|university|degree|btech|b\.tech|ggits|gyan ganga|rgpv|cgpa|gpa|grades?|marks?|academics?|coursework|study|studies)\b/i.test(q)) {
     const edu = kb.education;
-    return `🎓 **${edu.degree}**\n🏫 ${edu.institution}\n📅 ${edu.duration}\n\nSkills developed: ${edu.skills.join(', ')}`;
+    return `🎓 **Education & Academics:**\n\n• **Degree:** ${edu.degree}\n• **Institution:** ${edu.institution}\n• **Timeline:** ${edu.duration} (Graduation: May 2026)\n• **CGPA:** **${edu.cgpa} / 10.0**\n• **Relevant Coursework:** ${edu.skills.join(', ')}`;
   }
 
-  // ── Location / remote
-  if (/location|where|city|india|jabalpur|remote|hybrid|onsite|on.site/.test(q)) {
-    return `📍 Shubh is based in **Greater Jabalpur, India**.\n\nHe is open to all work arrangements:\n✅ **On-site** — Jabalpur and anywhere in India\n✅ **Hybrid** — Flexible schedule\n✅ **Remote** — Fully remote opportunities worldwide`;
+  // ── 10. Location & Relocation
+  if (/\b(location|city|mumbai|andheri|jabalpur|relocat|remote|hybrid|onsite|on-site)\b/i.test(q) ||
+      /where.*(live|stay|base|located|from)/i.test(q)) {
+    return `📍 **Location & Mobility:**\n\nShubh is based in **${kb.location}**.\n\nHe is flexible and open to:\n✅ **On-site** — Mumbai and major tech hubs across India\n✅ **Hybrid** — Blended office & remote\n✅ **Remote** — Worldwide engineering roles`;
   }
 
-  // ── Availability / job search
-  if (/availab|looking|hire|job|opportunit|open to|recruit|seek|employ/.test(q)) {
-    return `✅ **Yes! Shubh is actively looking for full-time opportunities!**\n\nHe is graduating in June 2026 and ready to bring his skills to a high-impact team.\n\n**Ideal Roles:**\n• Backend Engineer / Software Engineer\n• AI Engineer / GenAI Developer\n• Salesforce Developer\n• Full-Stack Developer\n\n📬 **Best way to reach him:**\n🔗 LinkedIn: linkedin.com/in/shubh-namdeo\n🐙 GitHub: github.com/Shubhnamdeo`;
+  // ── 10. Specific Technical Stack Inquiries
+  if (/\b(python)\b/i.test(q)) {
+    return `🐍 **Python:** One of Shubh's primary languages! He uses Python for backend REST APIs, automation, object-oriented logic, and integrating AI/ML models. He holds the **Python Essentials** certification from Cisco Networking Academy.`;
   }
 
-  // ── AI Agent specific
-  if (/ai agent|agentic|agent dev|agent build|einstein|agentforce/.test(q)) {
-    return `🤖 **AI Agents are Shubh's specialty!**\n\nHe has hands-on experience:\n• **Google Cloud ADK** — Engineered AI agents with the Agent Development Kit\n• **Salesforce Einstein/Agentforce** — Built and deployed enterprise AI agents via the 100K Agentblazer Champions Program\n• **Gemini Multimodality** — Worked with multimodal RAG systems\n• **Prompt Engineering** — Advanced techniques including Chain-of-Thought and Few-Shot methods\n\nHe's not just studying AI agents — he's building them! 🚀`;
+  if (/\b(java)\b/i.test(q)) {
+    return `☕ **Java:** Core proficiency! Shubh is strong in Java OOP, data structures, backend logic, and holds the **Java Programming Fundamentals** credential from Oracle / LinkedIn Learning.`;
   }
 
-  // ── Prompt engineering
-  if (/prompt|engineering|chain.of.thought|few.shot|hallucin|cot/.test(q)) {
-    return `✨ **Prompt Engineering — Shubh's Core Skill!**\n\nHe holds multiple certifications in this domain:\n• **Advanced Prompt Engineering** (Simplilearn)\n• **Prompt Design in Vertex AI** (Google Cloud Skill Badge)\n• **Gemini Multimodality & Multimodal RAG** (Google Cloud)\n\nTechniques mastered:\n→ Chain-of-Thought (CoT) Prompting\n→ Few-Shot Prompting\n→ Minimizing AI hallucinations\n→ Structuring prompts for coding & automation tasks`;
+  if (/\b(node|node\.js|express|express\.js|mern)\b/i.test(q)) {
+    return `⚡ **Node.js & Express.js:** Shubh is an experienced backend developer in the Node.js ecosystem. He built and deployed the full-stack commercial EdTech platform **Topper's Matrix Classes** with Express.js and MongoDB.`;
   }
 
-  // ── Python / Node.js
-  if (/python/.test(q)) {
-    return `🐍 **Python** is one of Shubh's primary languages!\n\nHe uses Python for:\n• AI/ML model integration\n• Backend API development\n• Automation scripts\n• GenAI application development\n\nIt's listed as his #1 top skill on LinkedIn.`;
+  if (/\b(mongo|mongodb|database|databases|dbms|sql)\b/i.test(q)) {
+    return `🗄️ **Databases & Data Management:**\n\n• **MongoDB:** Used for scalable NoSQL storage, schema indexing, and fast query execution in his commercial platform Topper's Matrix Classes.\n• **SQL & Relational Databases:** Proficient in SQL queries, schema design, ACID transactions, and relational data modeling.`;
   }
 
-  if (/node(\.js)?/.test(q)) {
-    return `⚡ **Node.js** is a core part of Shubh's stack!\n\nHe uses Node.js for:\n• Backend server development\n• RESTful API design\n• Real-time applications\n• Microservice architecture`;
+  if (/\b(c\+\+|cpp)\b/i.test(q)) {
+    return `⚙️ **C++:** Shubh has a strong algorithmic foundation in C++ for Data Structures & Algorithms, holding the **CPA Programming Essentials in C++** certification from Cisco.`;
   }
 
-  // ── AWS
-  if (/aws|amazon web|cloud service/.test(q)) {
-    return `☁️ **AWS (Amazon Web Services)** — Shubh is an AWS Academy Graduate!\n\nCertification: **AWS Academy Cloud Foundations**\nIssued by: Amazon Web Services Training & Certification\n\nHe has hands-on knowledge of:\n• EC2 instances & compute services\n• Cloud storage and databases\n• Cloud architecture principles\n• Security best practices on AWS`;
+  if (/\b(salesforce|apex|lwc|lightning web components|agentforce|agentblazer)\b/i.test(q)) {
+    return `⚡ **Salesforce & Cloud Engineering:**\n\n• **Apex & LWC:** Developed automated business logic, secure triggers, and dynamic Lightning Web Components.\n• **Security Protocols:** Configured Field-Level Security (FLS) and granular authentication.\n• **Agentblazer:** Part of the elite Salesforce **100K Agentblazer Champions Program** with hands-on AI agent development.`;
   }
 
-  // ── GitHub / projects
-  if (/github|project|topper|matrix|events hub|portfolio|code|repo|repository/.test(q)) {
-    const pList = kb.projects.map(p => `🚀 **${p.title}**\n${p.description}\n🛠️ **Tech:** ${p.tech.join(' • ')}${p.url ? `\n🔗 ${p.url}` : ''}`).join('\n\n');
-    return `Here are Shubh's key featured projects 💻\n\n${pList}\n\nCheck out all his repositories at 🐙 github.com/Shubhnamdeo!`;
+  if (/\b(aws|amazon web services|cloud)\b/i.test(q)) {
+    return `☁️ **AWS & Cloud Infrastructure:**\n\n• **AWS Academy Cloud Foundations** certified\n• Hands-on with EC2, S3, cloud security architecture, and database hosting\n• Certified in Cloud Security Knowledge (**CCSK**) by the Cloud Security Alliance.`;
   }
 
-  // ── Contact
-  if (/contact|reach|email|message|connect|talk/.test(q)) {
-    return `📬 **How to reach Shubh:**\n\n🔗 **LinkedIn:** linkedin.com/in/shubh-namdeo (Best way!)\n🐙 **GitHub:** github.com/Shubhnamdeo\n\n💡 He's very responsive on LinkedIn. Don't hesitate to send a connection request and a message — he's actively looking for opportunities!`;
+  if (/\b(ai|genai|generative ai|llm|llms|agent development kit|adk|vertex ai|gemini|rag|prompt engineering)\b/i.test(q)) {
+    return `🤖 **AI, GenAI & Prompt Engineering:**\n\nShubh has demonstrated deep hands-on expertise with cutting-edge AI:\n• **Google Cloud Skill Badges:** ADK AI Agent Engineering, Gemini Multimodal RAG, and Vertex AI Prompt Design\n• **Prompt Engineering:** Certified by Simplilearn in Chain-of-Thought (CoT), Few-Shot prompting, and hallucination reduction\n• **Salesforce AI:** Enterprise agent workflows and automated business logic.`;
   }
 
-  // ── Interests / hobbies
-  if (/interest|passion|hobby|like|love|enjoy/.test(q)) {
-    return `💡 **Shubh's Passions:**\n\n${kb.interests.map(i => `• ${i}`).join('\n')}\n\nHe's driven by continuous learning — just look at his 18+ certifications! He posts regularly on LinkedIn about his learning journey and achievements. 🚀`;
+  if (/\b(git|github|tools|postman|linux|agile)\b/i.test(q)) {
+    return `🛠️ **Tools & Development Methodologies:**\n\n• **Version Control:** Git, GitHub (branching, PRs, CI/CD deployment)\n• **API Testing:** Postman for REST API verification and debugging\n• **Systems:** Linux command line, Shell scripting (Cisco Linux Essentials)\n• **Process:** Agile development, sprint planning, and secure SDLC.`;
   }
 
-  // ── LinkedIn / stats
-  if (/linkedin|follower|connection|post|network/.test(q)) {
-    return `📊 **Shubh on LinkedIn:**\n\n👥 **338 followers** | **248 connections**\n📝 Active poster — regularly shares certifications, learning milestones, and insights about AI\n\n🔗 linkedin.com/in/shubh-namdeo\n\nHis recent posts cover Google Cloud skill badges, Salesforce Agentblazer, Advanced Prompt Engineering, and more!`;
+  // ── 11. General Skills & Tech Stack
+  if (/\b(skills?|tech stack|technolog(y|ies)|what (can he|does he) do|proficien(t|cy)|stack|languages?)\b/i.test(q)) {
+    return `🛠️ **Shubh's Technical Arsenal:**\n\n💻 **Languages:** Python, Java, C++, JavaScript, SQL, Apex\n🌐 **Web & Frameworks:** Node.js, Express.js, RESTful APIs, Lightning Web Components (LWC), HTML/CSS\n🗄️ **Databases & Cloud:** MongoDB, SQL, AWS, Google Cloud, Salesforce\n🤖 **AI & GenAI:** Gemini API, Vertex AI, Multimodal RAG, Prompt Engineering, Agent Development Kit\n🔧 **Tools & Process:** Git/GitHub, Postman, Linux CLI, Agile Development`;
   }
 
-  // ── Fun facts
-  if (/fun fact|surprising|interesting|unique|special/.test(q)) {
-    return `🎉 **Fun Facts about Shubh:**\n\n• He has earned **18+ certifications** — and counting!\n• Part of the elite **100K Agentblazer Champions Program** by Salesforce\n• Earned **3 Google Cloud Skill Badges** in AI/ML in 2025\n• Acted as the sole developer for commercial EdTech platform Topper's Matrix Classes\n• Completed an enterprise software development internship at SmartBridge`;
+  // ── 12. Certifications
+  if (/\b(certif|certs?|badge|badges|credential|licenses?|courses?)\b/i.test(q)) {
+    if (/google|gcp|badge/i.test(q)) {
+      return `☁️ **Google Cloud Skill Badges (3):**\n\n${kb.googleCloudBadges.map(b => `🏅 ${b}`).join('\n')}\n\nAll verified on Credly / Google Cloud.`;
+    }
+    if (/cisco|security/i.test(q)) {
+      return `🔐 **Cisco & Security Certifications:**\n\n${certsByCategory('Security')}\n${certsByCategory('Systems')}\n${certsByCategory('Networking')}`;
+    }
+    if (/salesforce/i.test(q)) {
+      return `⚡ **Salesforce Certifications:**\n\n${certsByCategory('Salesforce')}`;
+    }
+    return `🏆 Shubh holds **18+ verified professional certifications** across high-impact domains:\n\n☁️ **Google Cloud:** AI Agent Engineering (ADK), Gemini Multimodality & RAG, Vertex AI\n⚡ **Salesforce:** AI Agent Developer (LastMile Program), Agentblazer Trail\n🌐 **Cloud & Security:** AWS Academy Cloud Foundations, CCSK Cloud Security, Cisco Cybersecurity\n💻 **Programming & Systems:** Cisco C++, Java Fundamentals, Cisco Linux Essentials\n📊 **Data:** Power BI, Introduction to Data Science\n\nAsk me about any specific certification or domain! 🎯`;
   }
 
-  // ── What can you ask
-  if (/what can|what should|help|ask|question/.test(q)) {
-    return `Here are things you can ask me about Shubh:\n\n🎯 **Career:** "Is he looking for a job?" / "What roles suit him?"\n💻 **Skills:** "What programming languages does he know?"\n🤖 **AI:** "Tell me about his AI experience"\n🏆 **Certs:** "What certifications does he have?"\n🎓 **Education:** "Where did he study?"\n📬 **Contact:** "How can I reach Shubh?"\n📍 **Location:** "Where is he based?"\n\nJust type your question and I'll answer! 😊`;
+  // ── 13. Leadership & Soft Skills
+  if (/\b(leader|leadership|club|fusion beats|extracurricular|soft skills|teamwork|communication)\b/i.test(q)) {
+    return `🌟 **Leadership & Extracurriculars:**\n\n• **Club Lead (Fusion Beats):** Facilitated cross-functional communication, technical discussions, and event logistics.\n• **Collaborative Problem-Solving:** Experienced in agile teamwork, requirement gathering, and client-facing communication for commercial software projects.`;
   }
 
-  // ── Default fallback
-  return `Great question! Here's a quick summary of Shubh:\n\nHe's a **Software Engineer** specializing in **Full-Stack & Backend Development (Python, Java, Node.js, MERN stack)**.\n\n⚡ **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n🚀 **Featured Project:** Topper's Matrix Classes (Paid Freelance Commercial Platform)\n🏆 **Certifications:** 18+ verified credentials (AWS, Cisco, Prompt Engineering, Google Cloud Badges)\n\n📬 Reach him on **LinkedIn**: linkedin.com/in/shubh-namdeo\n\nOr ask me something specific like:\n• "What are his top skills?"\n• "Tell me about his projects"\n• "What certifications does he have?"`;
+  // ── 14. Who is Shubh / About
+  if (/\b(who is shubh|about shubh|tell me about (him|yourself)|background|bio|profile|summary)\b/i.test(q)) {
+    return `**Shubh Namdeo** is a Results-driven Software Engineer based in **Andheri East, Mumbai, Maharashtra, India** 🇮🇳\n\n${kb.about}\n\n🔑 **Core Stack:** Python, Java, Node.js, Express.js, MongoDB, AWS, RESTful APIs\n🎯 **Status:** Graduating in May 2026 • Actively seeking Graduate Engineer / Software Developer roles across India.`;
+  }
+
+  // ── 15. Smart Keyword Scoring Engine (fallback for non-exact queries)
+  const tokens = q.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+  const scoreCard = {
+    skills: 0,
+    projects: 0,
+    experience: 0,
+    education: 0,
+    contact: 0,
+    certs: 0
+  };
+
+  const skillKeywords = ['code', 'coding', 'program', 'programming', 'developer', 'software', 'backend', 'frontend', 'framework', 'database', 'ai', 'cloud', 'aws', 'python', 'java', 'node', 'mongo', 'sql'];
+  const projectKeywords = ['build', 'built', 'project', 'app', 'application', 'topper', 'matrix', 'events', 'hub', 'website', 'portfolio', 'freelance'];
+  const expKeywords = ['intern', 'internship', 'smartbridge', 'experience', 'company', 'work', 'job', 'developer'];
+  const eduKeywords = ['college', 'university', 'study', 'studying', 'degree', 'cgpa', 'gpa', 'btech', 'gyan', 'ganga', 'rgpv', 'marks'];
+  const contactKeywords = ['reach', 'email', 'phone', 'call', 'number', 'connect', 'linkedin', 'talk', 'hire', 'interview'];
+  const certKeywords = ['cert', 'certificate', 'badge', 'credential', 'exam', 'cisco', 'google', 'oracle'];
+
+  tokens.forEach(t => {
+    if (skillKeywords.includes(t)) scoreCard.skills++;
+    if (projectKeywords.includes(t)) scoreCard.projects++;
+    if (expKeywords.includes(t)) scoreCard.experience++;
+    if (eduKeywords.includes(t)) scoreCard.education++;
+    if (contactKeywords.includes(t)) scoreCard.contact++;
+    if (certKeywords.includes(t)) scoreCard.certs++;
+  });
+
+  const bestTopic = Object.entries(scoreCard).sort((a, b) => b[1] - a[1])[0];
+  if (bestTopic && bestTopic[1] > 0) {
+    switch (bestTopic[0]) {
+      case 'skills':
+        return `🛠️ **Shubh's Technical Skills:**\n\n• **Languages:** Python, Java, C++, JavaScript, SQL, Apex\n• **Backend & Web:** Node.js, Express.js, RESTful APIs, LWC, HTML/CSS\n• **Cloud & Databases:** MongoDB, AWS, Google Cloud, Salesforce\n• **AI & GenAI:** Gemini API, Vertex AI, RAG Systems, Prompt Engineering\n\nWant to know about a specific tool or language? Just ask! 😊`;
+      case 'projects':
+        return `🚀 **Shubh's Featured Projects:**\n\n1. **Topper’s Matrix Classes:** Commercial EdTech platform (Node.js, Express, MongoDB, sole developer)\n2. **Events Hub:** Scalable event management app (LWC, Apex, Cloud)\n3. **Interactive Portfolio:** Responsive web portfolio with custom AI assistant\n\nType any project name for in-depth technical details!`;
+      case 'experience':
+        return `💼 **Experience:** Shubh completed an 8-month enterprise internship as an **Enterprise Software Developer (Intern)** at **SmartBridge (LastMile Program)**, building automated business logic, configuring FLS security, and optimizing backend systems.`;
+      case 'education':
+        return `🎓 **Education:** Pursuing B.Tech in Computer Science & Engineering at **Gyan Ganga Institute of Technology & Sciences (RGPV)** (Graduation: May 2026) with a **7.39 CGPA**.`;
+      case 'contact':
+        return `📬 Reach Shubh directly via **Email:** ${kb.email} or **Phone:** ${kb.phone}. You can also connect on LinkedIn at **linkedin.com/in/shubh-namdeo**!`;
+      case 'certs':
+        return `🏆 Shubh holds **18+ certifications** including 3 Google Cloud Skill Badges (AI Agents & Gemini RAG), AWS Cloud Foundations, Salesforce Agentblazer, and Cisco Cybersecurity.`;
+    }
+  }
+
+  // ── 16. Helpful Fallback with One-Click Interactive Chips
+  return `I'm happy to help you learn about Shubh! Here is a quick snapshot:\n\n• **Software Engineer** specializing in **Python, Java, Node.js, MongoDB, AWS & AI Agents**\n• **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n• **Key Project:** Topper's Matrix Classes (Commercial Platform)\n• **Graduation:** B.Tech CSE (May 2026) with 7.39 CGPA • Based in Mumbai\n\nClick any topic below to explore directly:\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Featured Project</button><button class="quick-q" data-q="Tell me about his work experience">Work Experience</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button><button class="quick-q" data-q="Can I see his resume?">Resume Summary</button></div>`;
 }
 
 // ─── Typewriter Effect ────────────────────────────────────────────
