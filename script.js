@@ -87,6 +87,7 @@ const SHUBH_KNOWLEDGE = {
     { name: "Cybersecurity Essentials", issuer: "Cisco Networking Academy", featured: false, category: "Security" },
     { name: "Introduction to Cybersecurity", issuer: "Cisco Networking Academy", featured: false, category: "Security" },
     { name: "Oracle Artificial Intelligence with Machine Learning", issuer: "Oracle Academy", featured: false, category: "AI" },
+    { name: "Data Fundamentals", issuer: "IBM SkillsBuild", featured: true, category: "Data" },
     { name: "Power BI for Beginners", issuer: "Simplilearn SkillUp", featured: false, category: "Data" },
     { name: "Linux Essentials (NDG)", issuer: "Cisco Networking Academy", featured: false, category: "Systems" },
     { name: "CPA Programming Essentials in C++", issuer: "Cisco", featured: false, category: "Programming" },
@@ -163,7 +164,7 @@ function getAIResponse(question) {
   const cleanQLetters = cleanQ.replace(/[^a-z0-9]/gi, '');
   if (!cleanQLetters) {
     if (/^(hi|hello|hey|howdy|sup|yo|good morning|good afternoon|good evening)\b/i.test(q)) {
-      return `Hey there! 👋 I'm Shubh's interactive AI assistant. I know all about his engineering skills, commercial projects, SmartBridge internship, and 18+ certifications.\n\nWhat would you like to know?\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top skills?</button><button class="quick-q" data-q="Tell me about Shubh's projects">Projects?</button><button class="quick-q" data-q="Tell me about his work experience">Experience?</button><button class="quick-q" data-q="What is his contact info?">Contact?</button></div>`;
+      return `Hey there! 👋 I'm Shubh's interactive AI assistant. I know all about his engineering skills, commercial projects, SmartBridge internship, and 19+ certifications.\n\nWhat would you like to know?\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top skills?</button><button class="quick-q" data-q="Tell me about Shubh's projects">Projects?</button><button class="quick-q" data-q="Tell me about his work experience">Experience?</button><button class="quick-q" data-q="What is his contact info?">Contact?</button></div>`;
     }
     if (/^(can i ask|may i ask|i have a question|quick question|ask a question|ask you something|i want to ask)\b/i.test(q)) {
       return `Of course! 😊 Go right ahead and ask me anything about Shubh's projects, technical skills, SmartBridge internship, education, or contact details.\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Projects</button><button class="quick-q" data-q="Tell me about his work experience">Experience</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button></div>`;
@@ -279,7 +280,10 @@ function getAIResponse(question) {
   }
 
   // ── 12. Certifications
-  if (/\b(certif|certs?|badge|badges|credential|licenses?|courses?)\b/i.test(q)) {
+  if (/\b(certif\w*|certs?|badges?|credentials?|licenses?|courses?)\b/i.test(q)) {
+    if (/ibm|data fundamentals/i.test(q)) {
+      return `📊 **IBM SkillsBuild Certification:**\n\n• **Data Fundamentals** — Issued by IBM SkillsBuild (Nov 2026)\n\nCredential verifies foundational competencies in data architecture, data science concepts, data repositories, and analytics workflows.\n\n🔗 Verify: credly.com/badges/06023c36-5583-43a9-8114-7ce4c911b894`;
+    }
     if (/google|gcp|badge/i.test(q)) {
       return `☁️ **Google Cloud Skill Badges (3):**\n\n${kb.googleCloudBadges.map(b => `🏅 ${b}`).join('\n')}\n\nAll verified on Credly / Google Cloud.`;
     }
@@ -289,7 +293,7 @@ function getAIResponse(question) {
     if (/salesforce/i.test(q)) {
       return `⚡ **Salesforce Certifications:**\n\n${certsByCategory('Salesforce')}`;
     }
-    return `🏆 Shubh holds **18+ verified professional certifications** across high-impact domains:\n\n☁️ **Google Cloud:** AI Agent Engineering (ADK), Gemini Multimodality & RAG, Vertex AI\n⚡ **Salesforce:** AI Agent Developer (LastMile Program), Agentblazer Trail\n🌐 **Cloud & Security:** AWS Academy Cloud Foundations, CCSK Cloud Security, Cisco Cybersecurity\n💻 **Programming & Systems:** Cisco C++, Java Fundamentals, Cisco Linux Essentials\n📊 **Data:** Power BI, Introduction to Data Science\n\nAsk me about any specific certification or domain! 🎯`;
+    return `🏆 Shubh holds **19+ verified professional certifications** across high-impact domains:\n\n☁️ **Google Cloud:** AI Agent Engineering (ADK), Gemini Multimodality & RAG, Vertex AI\n⚡ **Salesforce:** AI Agent Developer (LastMile Program), Agentblazer Trail\n🌐 **Cloud & Security:** AWS Academy Cloud Foundations, CCSK Cloud Security, Cisco Cybersecurity\n💻 **Programming & Systems:** Cisco C++, Java Fundamentals, Cisco Linux Essentials\n📊 **Data:** IBM Data Fundamentals, Power BI, Introduction to Data Science\n\nAsk me about any specific certification or domain! 🎯`;
   }
 
   // ── 13. Leadership & Soft Skills
@@ -343,7 +347,7 @@ function getAIResponse(question) {
       case 'contact':
         return `📬 Reach Shubh directly via **Email:** ${kb.email} or **Phone:** ${kb.phone}. You can also connect on LinkedIn at **linkedin.com/in/shubh-namdeo**!`;
       case 'certs':
-        return `🏆 Shubh holds **18+ certifications** including 3 Google Cloud Skill Badges (AI Agents & Gemini RAG), AWS Cloud Foundations, Salesforce Agentblazer, and Cisco Cybersecurity.`;
+        return `🏆 Shubh holds **19+ certifications** including 3 Google Cloud Skill Badges (AI Agents & Gemini RAG), AWS Cloud Foundations, Salesforce Agentblazer, and Cisco Cybersecurity.`;
     }
   }
 
