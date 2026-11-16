@@ -164,17 +164,17 @@ function getAIResponse(question) {
   const cleanQLetters = cleanQ.replace(/[^a-z0-9]/gi, '');
   if (!cleanQLetters) {
     if (/^(hi|hello|hey|howdy|sup|yo|good morning|good afternoon|good evening)\b/i.test(q)) {
-      return `Hey there! 👋 I'm Shubh's interactive AI assistant. I know all about his engineering skills, commercial projects, SmartBridge internship, and 19+ certifications.\n\nWhat would you like to know?\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top skills?</button><button class="quick-q" data-q="Tell me about Shubh's projects">Projects?</button><button class="quick-q" data-q="Tell me about his work experience">Experience?</button><button class="quick-q" data-q="What is his contact info?">Contact?</button></div>`;
+      return `Hey there! 👋 I'm Shubh's interactive AI assistant. I know all about his engineering skills, commercial projects, SmartBridge internship, and 19+ certifications.\n\nWhat would you like to know?`;
     }
     if (/^(can i ask|may i ask|i have a question|quick question|ask a question|ask you something|i want to ask)\b/i.test(q)) {
-      return `Of course! 😊 Go right ahead and ask me anything about Shubh's projects, technical skills, SmartBridge internship, education, or contact details.\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Projects</button><button class="quick-q" data-q="Tell me about his work experience">Experience</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button></div>`;
+      return `Of course! 😊 Go right ahead and ask me anything about Shubh's projects, technical skills, SmartBridge internship, education, or contact details.`;
     }
   }
 
   // ── 2. Help / Menu / Capabilities (STRICT check so normal questions with "ask" don't trigger this!)
   if (/^(help|help me|what can you do|what can i ask|commands|menu|options|how to use|features)$/i.test(q) ||
       (/^(what can (you|i) (do|ask)|what questions can i ask)/i.test(q) && q.split(' ').length <= 6)) {
-    return `Here are some great topics you can ask me about:\n\n💻 **Technical Skills:** "What programming languages does he know?" or "Does he know Python and Node.js?"\n🚀 **Projects:** "Tell me about Topper's Matrix Classes" or "Show me his projects"\n💼 **Experience:** "Tell me about his SmartBridge internship"\n🤖 **AI & GenAI:** "Tell me about his AI experience"\n🎓 **Education:** "Where did he study?" or "What is his CGPA?"\n🏆 **Certifications:** "Show me his Google Cloud and AWS badges"\n📍 **Location & Hiring:** "Where is he based?" or "Is he available for hire?"\n📬 **Contact:** "What is his email or phone number?"\n📄 **Resume:** "Can I see his resume?"\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Topper's Matrix</button><button class="quick-q" data-q="Tell me about his work experience">Internship</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button></div>`;
+    return `Here are some great topics you can ask me about:\n\n💻 **Technical Skills:** "What programming languages does he know?" or "Does he know Python and Node.js?"\n🚀 **Projects:** "Tell me about Topper's Matrix Classes" or "Show me his projects"\n💼 **Experience:** "Tell me about his SmartBridge internship"\n🤖 **AI & GenAI:** "Tell me about his AI experience"\n🎓 **Education:** "Where did he study?" or "What is his CGPA?"\n🏆 **Certifications:** "Show me his Google Cloud and AWS badges"\n📍 **Location & Hiring:** "Where is he based?" or "Is he available for hire?"\n📬 **Contact:** "What is his email or phone number?"\n📄 **Resume:** "Can I see his resume?"`;
   }
 
   // ── 3. Resume / CV / Biodata
@@ -352,7 +352,7 @@ function getAIResponse(question) {
   }
 
   // ── 16. Helpful Fallback with One-Click Interactive Chips
-  return `I'm happy to help you learn about Shubh! Here is a quick snapshot:\n\n• **Software Engineer** specializing in **Python, Java, Node.js, MongoDB, AWS & AI Agents**\n• **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n• **Key Project:** Topper's Matrix Classes (Commercial Platform)\n• **Graduation:** B.Tech CSE (May 2026) with 7.39 CGPA • Based in Mumbai\n\nClick any topic below to explore directly:\n\n<div class="quick-questions"><button class="quick-q" data-q="What are Shubh's top skills?">Top Skills</button><button class="quick-q" data-q="Tell me about Topper's Matrix Classes">Featured Project</button><button class="quick-q" data-q="Tell me about his work experience">Work Experience</button><button class="quick-q" data-q="What is his contact info?">Contact Details</button><button class="quick-q" data-q="Can I see his resume?">Resume Summary</button></div>`;
+  return `I'm happy to help you learn about Shubh! Here is a quick snapshot:\n\n• **Software Engineer** specializing in **Python, Java, Node.js, MongoDB, AWS & AI Agents**\n• **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n• **Key Project:** Topper's Matrix Classes (Commercial Platform)\n• **Graduation:** B.Tech CSE (May 2026) with 7.39 CGPA • Based in Mumbai\n\nFeel free to ask me anything specific!`;
 }
 
 // ─── Typewriter Effect ────────────────────────────────────────────
