@@ -87,7 +87,7 @@ const SHUBH_KNOWLEDGE = {
     { name: "Cybersecurity Essentials", issuer: "Cisco Networking Academy", featured: false, category: "Security" },
     { name: "Introduction to Cybersecurity", issuer: "Cisco Networking Academy", featured: false, category: "Security" },
     { name: "Oracle Artificial Intelligence with Machine Learning", issuer: "Oracle Academy", featured: false, category: "AI" },
-    { name: "Data Fundamentals", issuer: "IBM SkillsBuild", featured: true, category: "Data" },
+    { name: "IBM Data Fundamentals", issuer: "IBM SkillsBuild", featured: true, category: "Data" },
     { name: "Power BI for Beginners", issuer: "Simplilearn SkillUp", featured: false, category: "Data" },
     { name: "Linux Essentials (NDG)", issuer: "Cisco Networking Academy", featured: false, category: "Systems" },
     { name: "CPA Programming Essentials in C++", issuer: "Cisco", featured: false, category: "Programming" },
