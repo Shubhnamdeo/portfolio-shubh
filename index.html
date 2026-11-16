@@ -666,7 +666,8 @@
         <span class="footer-logo"><span class="logo-bracket">&lt;</span>SN<span class="logo-bracket">/&gt;</span></span>
         <p>© 2026 Shubh Namdeo. Built with ❤️ and a touch of AI.</p>
         <p class="footer-sub">Greater Jabalpur, India · Open to Work</p>
-      </div>
+
+        <p class="footer-views" style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.5rem;">Views: <span id="visit-count">—</span></p>      </div>
     </div>
   </footer>
 
@@ -721,6 +722,28 @@
     </div>
   </div>
 
+
+  <!-- Visit Counter (CounterAPI - free, no signup) -->
+  <script>
+  (function() {
+    var el = document.getElementById('visit-count');
+    if (!el) return;
+    // Use CounterAPI.com free endpoint
+    fetch('https://counterapi.com/api/shubhnamdeo-portfolio/visits/up')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var count = data.count || 0;
+        el.textContent = count > 100 ? '100+' : count;
+      })
+      .catch(function() {
+        // Fallback to localStorage if API is unreachable
+        var key = 'shubh_portfolio_views';
+        var c = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+        localStorage.setItem(key, c);
+        el.textContent = c > 100 ? '100+' : c;
+      });
+  })();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
