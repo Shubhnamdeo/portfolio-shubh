@@ -49,6 +49,20 @@ const SHUBH_KNOWLEDGE = {
 
   experience: [
     {
+      role: "Full-Stack Developer & Site Administrator (Freelance)",
+      company: "Topper’s Matrix Classes (Client Project)",
+      duration: "July 2026 – Present",
+      months: "5 months (Ongoing)",
+      location: "India / Remote",
+      current: true,
+      highlights: [
+        "Commissioned as sole engineer to architect, build, and deploy a commercial educational platform using Node.js, Express, and MongoDB",
+        "Engineered secure student authentication, course scheduling, dynamic study materials distribution, and optimized MongoDB queries",
+        "Directly managing live production operations, deployments on Render, continuous maintenance, and performance monitoring for 5+ months"
+      ],
+      techStack: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Production Deployment", "Site Administration"]
+    },
+    {
       role: "Enterprise Software Developer (Intern)",
       company: "SmartBridge (LastMile Program)",
       duration: "June 2025 – January 2026",
@@ -179,7 +193,7 @@ function getAIResponse(question) {
 
   // ── 3. Resume / CV / Biodata
   if (/\b(resume|cv|curriculum vitae|biodata|profile pdf)\b/i.test(q)) {
-    return `📄 **Shubh Namdeo's Resume Summary:**\n\n• **Title:** Results-driven Software Engineer (B.Tech CSE, graduating May 2026)\n• **Core Stack:** Python, Java, Node.js, Express.js, MongoDB, AWS, Salesforce, RESTful APIs\n• **Experience:** Enterprise Software Developer (Intern) at SmartBridge (8 months)\n• **Key Projects:** Topper's Matrix Classes (Commercial Platform) & Events Hub\n• **Contact:** ${kb.email} | ${kb.phone}\n• **Location:** ${kb.location}\n\nYou can review all detailed credentials right here on this portfolio or reach out directly to request the latest PDF copy! 📬`;
+    return `📄 **Shubh Namdeo's Resume Summary:**\n\n• **Title:** Results-driven Software Engineer (B.Tech CSE, graduating May 2026)\n• **Core Stack:** Python, Java, Node.js, Express.js, MongoDB, AWS, Salesforce, RESTful APIs\n• **Experience:** Full-Stack Developer at Topper's Matrix Classes (5 months ongoing) & Enterprise Developer at SmartBridge (8 months)\n• **Key Projects:** Topper's Matrix Classes (Commercial Platform) & Events Hub\n• **Contact:** ${kb.email} | ${kb.phone}\n• **Location:** ${kb.location}\n\nYou can review all detailed credentials right here on this portfolio or reach out directly to request the latest PDF copy! 📬`;
   }
 
   // ── 4. AI & GenAI Experience (Checked before general experience so "AI experience" triggers this)
@@ -209,10 +223,12 @@ function getAIResponse(question) {
     return `Here are Shubh's key featured projects 💻\n\n${pList}\n\nCheck out all his open-source work on GitHub at 🐙 **github.com/Shubhnamdeo**!`;
   }
 
-  // ── 6. Experience / Internship / SmartBridge
-  if (/\b(experience|internship|intern|smartbridge|smart bridge|lastmile|last mile|work history|career|job history)\b/i.test(q)) {
-    const sb = kb.experience[0];
-    return `💼 **Professional Experience:**\n\n⚡ **${sb.role}**\n🏢 **${sb.company}**\n📅 **${sb.duration} (${sb.months})**\n\n**Key Contributions:**\n${sb.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Technologies Used:** ${sb.techStack.join(', ')}`;
+  // ── 6. Experience / Internship / SmartBridge / Client Projects
+  if (/\b(experience|internship|intern|smartbridge|smart bridge|lastmile|last mile|work history|career|job history|topper|client project)\b/i.test(q)) {
+    const expList = kb.experience.map(e =>
+      `⚡ **${e.role}**\n🏢 **${e.company}**\n📅 **${e.duration} (${e.months})**\n\n**Key Contributions:**\n${e.highlights.map(h => `→ ${h}`).join('\n')}\n\n🛠️ **Technologies Used:** ${e.techStack.join(', ')}`
+    ).join('\n\n---\n\n');
+    return `💼 **Professional Experience:**\n\n${expList}`;
   }
 
   // ── 7. Job Search / Hiring / Availability
@@ -341,7 +357,7 @@ function getAIResponse(question) {
       case 'projects':
         return `🚀 **Shubh's Featured Projects:**\n\n1. **Topper’s Matrix Classes:** Commercial EdTech platform (Node.js, Express, MongoDB, sole developer)\n2. **Events Hub:** Scalable event management app (LWC, Apex, Cloud)\n3. **Interactive Portfolio:** Responsive web portfolio with custom AI assistant\n\nType any project name for in-depth technical details!`;
       case 'experience':
-        return `💼 **Experience:** Shubh completed an 8-month enterprise internship as an **Enterprise Software Developer (Intern)** at **SmartBridge (LastMile Program)**, building automated business logic, configuring FLS security, and optimizing backend systems.`;
+        return `💼 **Experience:** Shubh has extensive hands-on experience, including serving as **Full-Stack Developer & Site Administrator** for **Topper’s Matrix Classes** (5 months ongoing) and completing an 8-month enterprise internship as an **Enterprise Software Developer (Intern)** at **SmartBridge (LastMile Program)**.`;
       case 'education':
         return `🎓 **Education:** Pursuing B.Tech in Computer Science & Engineering at **Gyan Ganga Institute of Technology & Sciences (RGPV)** (Graduation: May 2026) with a **7.39 CGPA**.`;
       case 'contact':
