@@ -671,45 +671,218 @@ body {
   50% { opacity: 1; }
 }
 
-/* ---------- Banner Section ---------- */
+/* ---------- Banner Section (Interactive & Clean Typography) ---------- */
 .banner-section {
   position: relative;
   z-index: 2;
   width: 100%;
+  background: radial-gradient(ellipse at 85% 50%, rgba(56, 189, 248, 0.08) 0%, rgba(99, 120, 255, 0.05) 35%, #080c14 70%);
+  border-top: 1px solid rgba(99, 120, 255, 0.15);
+  border-bottom: 1px solid rgba(99, 120, 255, 0.15);
   overflow: hidden;
-  line-height: 0;
 }
 
-.banner-wrapper {
+.banner-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
   position: relative;
-  width: 100%;
+  min-height: 334px;
 }
 
-.banner-img {
-  width: 100%;
-  display: block;
-  max-height: 340px;
-  object-fit: cover;
-  object-position: center top;
-  filter: brightness(0.92) saturate(1.1);
-  transition: filter 0.4s ease;
-}
-
-.banner-wrapper:hover .banner-img {
-  filter: brightness(1) saturate(1.15);
-}
-
-.banner-overlay {
+.banner-code-bg {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(8, 12, 20, 0.15) 0%,
-    transparent 40%,
-    transparent 60%,
-    rgba(8, 12, 20, 0.15) 100%
-  );
+  top: 18px;
+  left: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.04);
+  line-height: 1.6;
   pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.banner-text-col {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  max-width: 660px;
+}
+
+.banner-code-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.banner-line {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(99, 120, 255, 0.6), transparent);
+}
+
+.banner-line:last-child {
+  background: linear-gradient(90deg, transparent, rgba(99, 120, 255, 0.6));
+}
+
+.banner-code-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-3);
+  letter-spacing: 1px;
+}
+
+.banner-headline {
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.banner-subline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.banner-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(13, 17, 32, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.8px;
+  color: #cbd5e1;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+  backdrop-filter: blur(8px);
+}
+
+.pill-code {
+  color: var(--accent-3);
+  font-weight: 700;
+}
+
+.pill-dot {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.banner-quote-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-left: 2px;
+}
+
+.quote-symbol {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: rgba(167, 139, 250, 0.7);
+  font-family: Georgia, serif;
+}
+
+.quote-content {
+  border-left: 2px solid rgba(167, 139, 250, 0.4);
+  padding-left: 12px;
+}
+
+.quote-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.45;
+  letter-spacing: 0.2px;
+}
+
+.quote-author {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.banner-visual-col {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.banner-portrait-img {
+  max-height: 334px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.6));
+  transition: transform 0.4s ease;
+}
+
+.banner-visual-col:hover .banner-portrait-img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 992px) {
+  .banner-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 36px 20px;
+    gap: 24px;
+  }
+  .banner-code-header {
+    justify-content: center;
+  }
+  .banner-headline {
+    font-size: 1.85rem;
+  }
+  .banner-badge-pill {
+    justify-content: center;
+  }
+  .banner-quote-box {
+    justify-content: center;
+    text-align: left;
+  }
+  .banner-portrait-img {
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 600px) {
+  .banner-headline {
+    font-size: 1.5rem;
+  }
+  .banner-subline {
+    font-size: 0.74rem;
+    letter-spacing: 1.5px;
+  }
+  .banner-badge-pill {
+    font-size: 0.68rem;
+    gap: 6px;
+    padding: 6px 10px;
+  }
 }
 
 /* ---------- About Section (3-col with avatar) ---------- */
