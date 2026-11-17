@@ -676,22 +676,23 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  background: radial-gradient(ellipse at 85% 50%, rgba(56, 189, 248, 0.08) 0%, rgba(99, 120, 255, 0.05) 35%, #080c14 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(99, 120, 255, 0.08) 0%, rgba(56, 189, 248, 0.04) 40%, #080c14 80%);
   border-top: 1px solid rgba(99, 120, 255, 0.15);
   border-bottom: 1px solid rgba(99, 120, 255, 0.15);
   overflow: hidden;
 }
 
 .banner-container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 56px 24px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  justify-content: center;
+  text-align: center;
   position: relative;
-  min-height: 334px;
+  min-height: 260px;
 }
 
 .banner-code-bg {
@@ -700,7 +701,7 @@ body {
   left: 24px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.03);
   line-height: 1.6;
   pointer-events: none;
   user-select: none;
@@ -710,13 +711,17 @@ body {
 .banner-text-col {
   position: relative;
   z-index: 2;
-  flex: 1;
-  max-width: 660px;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .banner-code-header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   margin-bottom: 12px;
 }
@@ -747,7 +752,7 @@ body {
   color: #ffffff;
   text-transform: uppercase;
   line-height: 1.15;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
 }
 
@@ -757,20 +762,21 @@ body {
   font-weight: 500;
   letter-spacing: 2px;
   color: #94a3b8;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   text-transform: uppercase;
 }
 
 .banner-badge-pill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: rgba(13, 17, 32, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   letter-spacing: 0.8px;
   color: #cbd5e1;
   margin-bottom: 22px;
@@ -789,9 +795,10 @@ body {
 
 .banner-quote-box {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
-  padding-left: 2px;
+  padding: 0;
 }
 
 .quote-symbol {
@@ -804,6 +811,7 @@ body {
 .quote-content {
   border-left: 2px solid rgba(167, 139, 250, 0.4);
   padding-left: 12px;
+  text-align: left;
 }
 
 .quote-text {
@@ -824,49 +832,12 @@ body {
   margin-top: 5px;
 }
 
-.banner-visual-col {
-  position: relative;
-  z-index: 2;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.banner-portrait-img {
-  max-height: 334px;
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.6));
-  transition: transform 0.4s ease;
-}
-
-.banner-visual-col:hover .banner-portrait-img {
-  transform: scale(1.02);
-}
-
 @media (max-width: 992px) {
   .banner-container {
-    flex-direction: column-reverse;
-    text-align: center;
     padding: 36px 20px;
-    gap: 24px;
-  }
-  .banner-code-header {
-    justify-content: center;
   }
   .banner-headline {
     font-size: 1.85rem;
-  }
-  .banner-badge-pill {
-    justify-content: center;
-  }
-  .banner-quote-box {
-    justify-content: center;
-    text-align: left;
-  }
-  .banner-portrait-img {
-    max-height: 240px;
   }
 }
 
