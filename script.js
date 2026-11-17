@@ -421,7 +421,6 @@ const chatMsgs   = document.getElementById('chatMessages');
 const chatTyping = document.getElementById('chatTyping');
 const openChatBtn   = document.getElementById('openChatBtn');
 const heroAskBtn    = document.getElementById('heroAskBtn');
-const heroResumeBtn = document.getElementById('heroResumeBtn');
 const contactAskBtn = document.getElementById('contactAskBtn');
 
 function openChat() {
@@ -438,10 +437,6 @@ function closeChat() {
 chatFab.addEventListener('click', openChat);
 openChatBtn?.addEventListener('click', openChat);
 heroAskBtn?.addEventListener('click', openChat);
-heroResumeBtn?.addEventListener('click', () => {
-  openChat();
-  sendMessage("Can I see his resume?");
-});
 contactAskBtn?.addEventListener('click', openChat);
 chatClose.addEventListener('click', closeChat);
 
@@ -645,12 +640,25 @@ const pdfClose    = document.getElementById('pdfClose');
 const pdfFrame    = document.getElementById('pdfFrame');
 const pdfTitle    = document.getElementById('pdfTitle');
 const pdfDownload = document.getElementById('pdfDownload');
+const pdfOpenNewTab = document.getElementById('pdfOpenNewTab');
+const pdfLightboxImg = document.getElementById('pdfLightboxImg');
 
 function openPDF(path, title) {
-  pdfFrame.src = path;
-  pdfTitle.textContent = title;
-  pdfDownload.href = path;
-  pdfDownload.setAttribute('download', title + '.pdf');
+  const previewPath = path.replace('.pdf', '.webp').replace('certificates/', 'certificates/previews/');
+  if (pdfLightboxImg) {
+    pdfLightboxImg.src = previewPath;
+  }
+  if (pdfFrame) {
+    pdfFrame.src = path;
+  }
+  if (pdfTitle) pdfTitle.textContent = title;
+  if (pdfDownload) {
+    pdfDownload.href = path;
+    pdfDownload.setAttribute('download', title + '.pdf');
+  }
+  if (pdfOpenNewTab) {
+    pdfOpenNewTab.href = path;
+  }
   pdfLightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -658,7 +666,10 @@ function openPDF(path, title) {
 function closePDF() {
   pdfLightbox.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { pdfFrame.src = ''; }, 400);
+  setTimeout(() => { 
+    if (pdfFrame) pdfFrame.src = ''; 
+    if (pdfLightboxImg) pdfLightboxImg.src = '';
+  }, 400);
 }
 
 pdfClose?.addEventListener('click', closePDF);
@@ -672,6 +683,21 @@ document.addEventListener('keydown', (e) => {
 });
 
 function initCertCards() {
+  document.querySelectorAll('.cert-embed-card').forEach(card => {
+    const btn = card.querySelector('.cert-expand-btn');
+    if (btn) {
+      const onclickAttr = btn.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/openPDF\('([^']+)',\s*'([^']+)'\)/);
+      if (match) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.cert-expand-btn')) return;
+          openPDF(match[1], match[2]);
+        });
+      }
+    }
+  });
+
   document.querySelectorAll('.cert-card[data-pdf]').forEach(card => {
     card.addEventListener('click', () => {
       const path  = card.dataset.pdf;
