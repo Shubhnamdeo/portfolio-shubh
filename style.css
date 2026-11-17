@@ -2271,3 +2271,89 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Resume Button in Hero ---------- */
+.btn-resume {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-resume:hover {
+  background: rgba(99, 120, 255, 0.15);
+  border-color: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(99, 120, 255, 0.25);
+}
+
+/* ---------- Certifications: Category Filter Bar ---------- */
+.cert-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.cert-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cert-filter-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(99, 120, 255, 0.4);
+  background: rgba(99, 120, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.cert-filter-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(99, 120, 255, 0.25) 0%, rgba(138, 92, 246, 0.25) 100%);
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(99, 120, 255, 0.2);
+}
+
+.cert-filter-btn .filter-count {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.cert-filter-btn.active .filter-count {
+  background: rgba(99, 120, 255, 0.35);
+  color: #fff;
+}
+
+.cert-embed-card.hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .cert-filter-bar {
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .cert-filter-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+}

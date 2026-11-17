@@ -421,6 +421,7 @@ const chatMsgs   = document.getElementById('chatMessages');
 const chatTyping = document.getElementById('chatTyping');
 const openChatBtn   = document.getElementById('openChatBtn');
 const heroAskBtn    = document.getElementById('heroAskBtn');
+const heroResumeBtn = document.getElementById('heroResumeBtn');
 const contactAskBtn = document.getElementById('contactAskBtn');
 
 function openChat() {
@@ -437,6 +438,10 @@ function closeChat() {
 chatFab.addEventListener('click', openChat);
 openChatBtn?.addEventListener('click', openChat);
 heroAskBtn?.addEventListener('click', openChat);
+heroResumeBtn?.addEventListener('click', () => {
+  openChat();
+  sendMessage("Can I see his resume?");
+});
 contactAskBtn?.addEventListener('click', openChat);
 chatClose.addEventListener('click', closeChat);
 
@@ -682,6 +687,35 @@ function initCertCards() {
   });
 }
 
+function initCertFilters() {
+  const filterBtns = document.querySelectorAll('.cert-filter-btn');
+  const certCards = document.querySelectorAll('.cert-embed-card');
+
+  if (!filterBtns.length || !certCards.length) return;
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+
+      certCards.forEach(card => {
+        if (filter === 'all') {
+          card.classList.remove('hidden');
+        } else {
+          const categories = (card.dataset.category || '').split(' ');
+          if (categories.includes(filter)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        }
+      });
+    });
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   typeNext();
@@ -689,6 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createParticles();
   positionBadges();
   initCertCards();
+  initCertFilters();
 
   window.addEventListener('resize', positionBadges);
 
